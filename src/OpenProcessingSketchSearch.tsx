@@ -1,6 +1,11 @@
 import { useState, type JSX } from "react";
-import { searchForUserSketches } from "./searchForUserSketches.ts";
+import {
+    filterForMatchingNames,
+    searchForUserSketches,
+} from "./searchForUserSketches.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
+import { useQuery } from "@tanstack/react-query";
+import { makeSketchURL } from "./opUtils.ts";
 
 //finding: tags are not included on the search result items
 export interface OPSketch {
@@ -14,25 +19,20 @@ export interface OPSketch {
     updatedOn: string;
     mode: string; //"p5js" | ?
 }
-function makeSketchURL(visualID: number): string {
-    return "https://openprocessing.org/sketch/" + visualID;
-}
 
 export function OpenProcessingSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
     const [userId, setUserId] = useState(135249);
 
-    const [searchResults, setSearchResults] = useState<OPSketch[]>([]);
+    const { data, isPending, error, refetch, fetchStatus } = useQuery({
+        queryKey: ["sketches", userId],
+        queryFn: () => searchForUserSketches(userId),
+        enabled: false,
+    });
 
-    async function handleSearchClick() {
-        if (userId <= 0) {
-            return;
-        }
-        //TODO: go through a local storage cache, don't hit the API every time!
-        const userSketches = await searchForUserSketches(userId, searchTerm);
-
-        setSearchResults(userSketches);
-    }
+    const filteredSketches = data
+        ? filterForMatchingNames(data, searchTerm)
+        : [];
 
     return (
         <section>
@@ -50,14 +50,19 @@ export function OpenProcessingSketchSearch(): JSX.Element {
                     value={searchTerm}
                     placeholder={"search term"}
                 />
-                <button onClick={handleSearchClick}>search</button>
+                <button onClick={() => refetch()}>search</button>
             </div>
             <div>
-                Results meta-data
-                <SketchResultsMetaData searchResults={searchResults} />
+                <div>
+                    Fetch Status: {fetchStatus}. {isPending ? "PENDING" : "-"}
+                </div>
+                <div>
+                    {error ? "ERROR: " + JSON.stringify(error) : "no error"}
+                </div>
             </div>
+            <SketchResultsMetaData searchResults={filteredSketches} />
             <div>
-                {searchResults.map((sketch) => {
+                {filteredSketches.map((sketch) => {
                     return (
                         <div
                             className="sketchSearchResult"
