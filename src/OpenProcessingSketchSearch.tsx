@@ -1,24 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
+import { makeSketchURL } from "./opUtils.ts";
 import {
     filterForMatchingNames,
     searchForUserSketches,
 } from "./searchForUserSketches.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
-import { useQuery } from "@tanstack/react-query";
-import { makeSketchURL } from "./opUtils.ts";
-
-//finding: tags are not included on the search result items
-export interface OPSketch {
-    visualID: number;
-    title: string;
-    description: string;
-    instructions: string;
-    isPrivate: number;
-    isDraft: number;
-    createdOn: string;
-    updatedOn: string;
-    mode: string; //"p5js" | ?
-}
 
 export function OpenProcessingSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
