@@ -1,5 +1,6 @@
 import { useState, type JSX } from "react";
 import { searchForUserSketches } from "./searchForUserSketches.ts";
+import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 
 //finding: tags are not included on the search result items
 export interface OPSketch {
@@ -76,23 +77,5 @@ export function OpenProcessingSketchSearch(): JSX.Element {
                 })}
             </div>
         </section>
-    );
-}
-
-export function SketchResultsMetaData({
-    searchResults,
-}: {
-    searchResults: OPSketch[];
-}): JSX.Element {
-    return (
-        <div>
-            <h3>Searcxh results meta data</h3>
-            <div>user id: </div>
-            <div>search term: </div>
-            <div>num results: {searchResults.length}</div>
-            <div>earliest creation: </div>
-            <div>latest creation: </div>
-            <div>most recently updated: </div>
-        </div>
     );
 }
