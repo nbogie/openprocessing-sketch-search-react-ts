@@ -188,3 +188,18 @@
     flex-direction: row;
     gap: 1rem;
 }
+
+.sketchCardsList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.sketchCard {
+    max-width: 20rem;
+    border: 2px solid gray;
+    border-radius: 1rem;
+    padding: 1rem;
+
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}

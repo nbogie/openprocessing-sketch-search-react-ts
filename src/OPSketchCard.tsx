@@ -3,7 +3,7 @@ import { type OPSketch, makeSketchURL } from "./opUtils.ts";
 
 export function OPSketchCard({ sketch }: { sketch: OPSketch }): JSX.Element {
     return (
-        <div className="sketchSearchResult" key={sketch.visualID}>
+        <div className="sketchCard" key={sketch.visualID}>
             <div>
                 <a href={makeSketchURL(sketch.visualID)}>{sketch.visualID}</a>
             </div>

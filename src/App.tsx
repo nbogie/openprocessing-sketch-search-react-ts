@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { OpenProcessingSketchSearch } from "./OpenProcessingSketchSearch.tsx";
+import { OPSketchSketchSearch } from "./OPSketchSearch.tsx";
 
 function App() {
     const [count, setCount] = useState(0);
@@ -8,7 +8,7 @@ function App() {
     return (
         <>
             <section id="center">
-                <OpenProcessingSketchSearch />
+                <OPSketchSketchSearch />
                 <button
                     className="counter"
                     onClick={() => setCount((count) => count + 1)}

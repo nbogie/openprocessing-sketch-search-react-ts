@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import type { OPSketch } from "./OpenProcessingSketchSearch.tsx";
+import type { OPSketch } from "./OPSketchSearch.tsx";
 import { makeSketchURL } from "./opUtils.ts";
 
 export function SketchLink({ sketch }: { sketch: OPSketch }): JSX.Element {

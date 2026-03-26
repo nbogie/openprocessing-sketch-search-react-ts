@@ -7,7 +7,7 @@ import {
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 import { OPSketchCard } from "./OPSketchCard.tsx";
 
-export function OpenProcessingSketchSearch(): JSX.Element {
+export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
     const [userId, setUserId] = useState(135249);
 
@@ -48,7 +48,7 @@ export function OpenProcessingSketchSearch(): JSX.Element {
                 </div>
             </div>
             <SketchResultsMetaData searchResults={filteredSketches} />
-            <div>
+            <div className={"sketchCardsList"}>
                 {filteredSketches.map((sketch) => {
                     return (
                         <OPSketchCard key={sketch.visualID} sketch={sketch} />
