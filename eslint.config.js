@@ -10,6 +10,7 @@ import pluginQuery from '@tanstack/eslint-plugin-query'
 
 export default defineConfig([
   globalIgnores(['dist']),
+  ...pluginQuery.configs['flat/recommended'], 
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -22,7 +23,6 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-    ...pluginQuery.configs['flat/recommended'], 
 
   },
   
