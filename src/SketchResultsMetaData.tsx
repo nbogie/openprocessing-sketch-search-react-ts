@@ -1,7 +1,7 @@
 import { boil } from "radash";
 import type { JSX } from "react";
-import type { OPSketch } from "./OpenProcessingSketchSearch.tsx";
 import { SketchLink } from "./SketchLink.tsx";
+import type { OPSketch } from "./opUtils.ts";
 
 export function SketchResultsMetaData({
     searchResults,

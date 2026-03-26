@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
-import { makeSketchURL } from "./opUtils.ts";
 import {
     filterForMatchingNames,
     searchForUserSketches,
 } from "./searchForUserSketches.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
+import { OPSketchCard } from "./OPSketchCard.tsx";
 
 export function OpenProcessingSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -51,20 +51,7 @@ export function OpenProcessingSketchSearch(): JSX.Element {
             <div>
                 {filteredSketches.map((sketch) => {
                     return (
-                        <div
-                            className="sketchSearchResult"
-                            key={sketch.visualID}
-                        >
-                            <div>
-                                <a href={makeSketchURL(sketch.visualID)}>
-                                    {sketch.visualID}
-                                </a>
-                            </div>
-                            <div>{sketch.title}</div>
-                            <div>{sketch.description}</div>
-                            <div>{sketch.mode}</div>
-                            <div>{sketch.updatedOn}</div>
-                        </div>
+                        <OPSketchCard key={sketch.visualID} sketch={sketch} />
                     );
                 })}
             </div>

@@ -1,4 +1,4 @@
-import type { OPSketch } from "./OpenProcessingSketchSearch.tsx";
+import type { OPSketch } from "./opUtils.ts";
 
 export async function searchForUserSketches(
     userId: number,
