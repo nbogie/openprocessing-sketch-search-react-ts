@@ -14,10 +14,10 @@ export function OPSketchCard({
         sketchOrWrapper.type === "wrapped"
             ? sketchOrWrapper.wrapper.item
             : sketchOrWrapper.sketch;
-    const wrapper =
-        sketchOrWrapper.type === "wrapped"
-            ? sketchOrWrapper.wrapper
-            : undefined;
+    // const wrapper =
+    //     sketchOrWrapper.type === "wrapped"
+    //         ? sketchOrWrapper.wrapper
+    //         : undefined;
     return (
         <div className="sketchCard" key={sketch.visualID}>
             {/* {wrapper && (
