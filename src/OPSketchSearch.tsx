@@ -27,8 +27,8 @@ export function OPSketchSketchSearch(): JSX.Element {
         : [];
 
     return (
-        <section>
-            <h2>OpenProcessing Sketch Search</h2>
+        <main>
+            <h1>OpenProcessing Sketch Search</h1>
             <div className="searchInputs">
                 userID:{" "}
                 <input
@@ -72,6 +72,6 @@ export function OPSketchSketchSearch(): JSX.Element {
                     );
                 })}
             </div>
-        </section>
+        </main>
     );
 }
