@@ -1,6 +1,6 @@
 # What's this
 
-A personal tool for searching through openprocessing for my sketches
+A personal tool for searching through my openprocessing sketches
 
 ## credits
 
