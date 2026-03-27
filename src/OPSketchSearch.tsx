@@ -38,13 +38,24 @@ export function OPSketchSketchSearch(): JSX.Element {
                 <input
                     type="text"
                     onChange={(e) => setUserId(parseInt(e.target.value))}
-                    value={userId || undefined}
+                    // if it's zero or undefined
+                    value={userId || ""}
                     placeholder={"userID"}
                 />
-                <button onClick={() => refetch()}>Get all sketches</button>
-                <button onClick={removeUserIdFromLocalStorage}>
-                    Remove userId from localStorage
-                </button>
+                {userId && (
+                    <>
+                        <button onClick={() => refetch()}>
+                            {data === undefined ? (
+                                <>Fetch all sketches from API</>
+                            ) : (
+                                <>Re-fetch all sketches from API!</>
+                            )}
+                        </button>
+                        <button onClick={removeUserIdFromLocalStorage}>
+                            Remove userId from localStorage
+                        </button>
+                    </>
+                )}
                 <div>
                     <div>
                         Fetch Status: {fetchStatus}.{" "}

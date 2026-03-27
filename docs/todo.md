@@ -1,8 +1,12 @@
 # todo
 
+- don't show userId by default once it's set? (if all use cases are for consuming our own stuff).
+    - tho, teachers might have multiple accounts.
+
 - feedback to openprocessing about hasMore header:
     - unreadable from browser
     - only present if a limit parameter is passed
+
 - ask openprocessing: any custom headers accepted / wanted for identifying client?
 
 - add toast to give feedback about user actions
@@ -25,3 +29,10 @@
     - tone.js / tonejs
     - p5.strands
     - socket.io / socketio
+
+## done:
+
+- don't search without a userId
+- don't show "get all sketches" without a valid userid present
+- store userId in local storage
+- change "fetch all sketches from API" to "Re-fetch all sketches from API!" once we have some, to discourage unnecessary use.
