@@ -6,16 +6,15 @@ import {
     exportFilteredListToClipboard,
     type ExportFormat,
 } from "./exportFilteredList.ts";
-import { OPSketchCard } from "./OPSketchCard.tsx";
-import type { OPSketch } from "./opUtils.ts";
+import { fetchAllUserSketches } from "./fetchAllUserSketches.ts";
 import {
     extractOPSketchesFromSearchResults,
     filterForMatchingNames,
-    // filterForMatchingNames,
     fuzzyFilterForMatchingNames,
-    searchForUserSketches,
     type FilteredSearchResults,
-} from "./searchForUserSketches.ts";
+} from "./filterSketches.ts";
+import { OPSketchList } from "./OPSketchList.tsx";
+import type { OPSketch } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 
 export function OPSketchSketchSearch(): JSX.Element {
@@ -26,8 +25,9 @@ export function OPSketchSketchSearch(): JSX.Element {
 
     const { data, isPending, error, refetch, fetchStatus } = useQuery({
         queryKey: ["sketches", userId],
-        queryFn: () => searchForUserSketches(userId),
+        queryFn: () => fetchAllUserSketches(userId),
         enabled: false,
+        retry: false,
     });
 
     const filteredSketches: FilteredSearchResults = data
@@ -66,13 +66,7 @@ export function OPSketchSketchSearch(): JSX.Element {
                             {isPending ? "No fetch yet." : "Data loaded."}
                         </div>
                     </div>
-                    <div>
-                        {error ? (
-                            "ERROR: " + JSON.stringify(error)
-                        ) : (
-                            <>&nbsp;</>
-                        )}
-                    </div>
+                    <div>{error ? "ERROR: " + error.message : <>&nbsp;</>}</div>
                 </div>
             </div>
 
@@ -117,27 +111,8 @@ export function OPSketchSketchSearch(): JSX.Element {
                 )}
             />
 
-            <div className={"sketchCardsList"}>
-                {filteredSketches.type === "fuzzySearched"
-                    ? filteredSketches.items.map((wrapper) => (
-                          <OPSketchCard
-                              key={wrapper.item.visualID}
-                              sketchOrWrapper={{
-                                  type: "wrapped",
-                                  wrapper: wrapper,
-                              }}
-                          />
-                      ))
-                    : filteredSketches.items.map((sketch) => (
-                          <OPSketchCard
-                              key={sketch.visualID}
-                              sketchOrWrapper={{
-                                  type: "sketch",
-                                  sketch: sketch,
-                              }}
-                          />
-                      ))}
-            </div>
+            <OPSketchList filteredSketches={filteredSketches} />
+
             <footer style={{ alignSelf: "stretch" }}>
                 <hr />
                 <button onClick={removeUserIdFromLocalStorage}>
