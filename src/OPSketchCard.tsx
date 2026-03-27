@@ -25,9 +25,11 @@ export function OPSketchCard({
                     <div>Score: {wrapper.score}</div>
                 </>
             )} */}
-            <div className="titleRow">
+            <div>
                 <SketchLink text={sketch.visualID.toString()} sketch={sketch} />
-                <div className="title">{sketch.title}</div>
+                <span style={{ paddingLeft: "0.5rem" }} className="title">
+                    {sketch.title}
+                </span>
             </div>
             <div>{sketch.description}</div>
             <div>{sketch.mode}</div>
