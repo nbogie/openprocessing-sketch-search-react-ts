@@ -41,12 +41,11 @@ export async function searchForUserSketches(
     return allData as OPSketch[];
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-function doesAPIHaveMore(response: Response): boolean {
-    //At the moment can't get custom headers in the browser without a certain header set on server
-    const headerRaw = response.headers.get("hasMore");
-    return headerRaw !== null && (headerRaw === "true" || headerRaw === "TRUE");
-}
+// function doesAPIHaveMore(response: Response): boolean {
+//     //At the moment can't get custom headers in the browser without a certain header set on server
+//     const headerRaw = response.headers.get("hasMore");
+//     return headerRaw !== null && headerRaw.toLowerCase() === "true";
+// }
 
 export function filterForMatchingNames(
     sketches: OPSketch[],
