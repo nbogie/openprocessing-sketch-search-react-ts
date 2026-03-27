@@ -49,6 +49,22 @@ export async function searchForUserSketches(
 //     return headerRaw !== null && headerRaw.toLowerCase() === "true";
 // }
 
+async function sleep(durationMillis: number): Promise<void> {
+    await new Promise((resolve) => {
+        setTimeout(resolve, durationMillis);
+    });
+}
+
+function makeIdentifyingHeadersAndInit(): RequestInit {
+    //TODO: find out if any custom headers are allowed, wanted by API
+    return {
+        headers: {
+            "X-App-Contact": "neill-at-birbs-nest-discord",
+            "X-App-Name": "NeillSketchSearch/0.1",
+        },
+    };
+}
+
 export function fuzzyFilterForMatchingNames(
     sketches: OPSketch[],
     searchPattern: string,
@@ -98,22 +114,6 @@ export function filterForMatchingNames(
                 field.toLowerCase().includes(searchTerm.toLowerCase()),
             ),
         ),
-    };
-}
-
-async function sleep(durationMillis: number): Promise<void> {
-    await new Promise((resolve) => {
-        setTimeout(resolve, durationMillis);
-    });
-}
-
-function makeIdentifyingHeadersAndInit(): RequestInit {
-    //TODO: find out if any custom headers are allowed, wanted by API
-    return {
-        headers: {
-            "X-App-Contact": "neill-at-birbs-nest-discord",
-            "X-App-Name": "NeillSketchSearch/0.1",
-        },
     };
 }
 
