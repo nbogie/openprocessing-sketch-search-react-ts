@@ -3,6 +3,10 @@ import type { OPSketch } from "./opUtils.ts";
 export async function searchForUserSketches(
     userId: number,
 ): Promise<OPSketch[]> {
+    if (userId <= 0) {
+        throw new Error("Can't search for nonsense userId: " + userId);
+    }
+
     const baseURL = "https://openprocessing.org";
     const unpaginatedURL = baseURL + `/api/user/${userId}/sketches`;
     let maybeHasMore = false;
@@ -17,22 +21,13 @@ export async function searchForUserSketches(
         if (allData.length > 0) {
             //delay before next fetch
             const sleepDurationMillis = 1000;
-            //TODO: find out if any custom headers are allowed, wanted by API
-            // const _optionsWithHeaders: RequestInit = {
-            //     headers: {
-            //         "X-App-Contact": "neill-at-birbs-nest-discord",
-            //         "X-App-Name": "NeillSketchSearch/0.1",
-            //     },
-            // };
-            console.log(
-                "waiting " +
-                    sleepDurationMillis +
-                    " before fetch #" +
-                    (safetyFetchCount + 1),
-            );
             await sleep(sleepDurationMillis);
         }
-        const response = await fetch(url);
+        const addIdentifyingHeaders = false; //not supported by openprocessing at the moment
+        const requestInit = addIdentifyingHeaders
+            ? makeIdentifyingHeadersAndInit()
+            : {};
+        const response = await fetch(url, requestInit);
         safetyFetchCount++;
         const batchData = await response.json();
         allData.push(...batchData);
@@ -68,4 +63,14 @@ async function sleep(durationMillis: number): Promise<void> {
     await new Promise((resolve) => {
         setTimeout(resolve, durationMillis);
     });
+}
+
+function makeIdentifyingHeadersAndInit(): RequestInit {
+    //TODO: find out if any custom headers are allowed, wanted by API
+    return {
+        headers: {
+            "X-App-Contact": "neill-at-birbs-nest-discord",
+            "X-App-Name": "NeillSketchSearch/0.1",
+        },
+    };
 }
