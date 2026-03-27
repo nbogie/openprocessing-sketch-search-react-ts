@@ -19,22 +19,27 @@ export function SketchResultsMetaData({
     );
 
     return (
-        <div>
-            <h3>Search results meta data</h3>
-            <div>user id: </div>
-            <div>search term: </div>
-            <div>num results: {searchResults.length}</div>
+        <details>
+            <summary>Search results meta data</summary>
             <div>
-                first: {firstCreation && <SketchLink sketch={firstCreation} />}
+                <div>user id: </div>
+                <div>search term: </div>
+                <div>num results: {searchResults.length}</div>
+                <div>
+                    first:{" "}
+                    {firstCreation && <SketchLink sketch={firstCreation} />}
+                </div>
+                <div>
+                    latest:{" "}
+                    {latestCreation && <SketchLink sketch={latestCreation} />}
+                </div>
+                <div>
+                    most recent update:{" "}
+                    {mostRecentUpdate && (
+                        <SketchLink sketch={mostRecentUpdate} />
+                    )}
+                </div>
             </div>
-            <div>
-                latest:{" "}
-                {latestCreation && <SketchLink sketch={latestCreation} />}
-            </div>
-            <div>
-                most recent update:{" "}
-                {mostRecentUpdate && <SketchLink sketch={mostRecentUpdate} />}
-            </div>
-        </div>
+        </details>
     );
 }

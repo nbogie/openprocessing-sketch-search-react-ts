@@ -11,7 +11,7 @@ export function exportFilteredListToClipboard(
     const full: ExportFormatter = (sk: OPSketch) => sk;
     const short: ExportFormatter = (sk: OPSketch) => ({
         visualId: sk.visualID,
-        description: sk.description,
+        title: sk.title,
     });
 
     const formatter = { idOnly, short, full }[format] satisfies ExportFormatter;

@@ -1,5 +1,6 @@
 # todo
 
+- add toast to give feedback about user actions
 - allow create, save (local storage) and export to json of lists of sketches (e.g. matching certain search results):
     - export:
         - at least json.
@@ -15,5 +16,6 @@
     - example
     - exercise
     - genuary
-
-- add toast to give feedback about user actions
+    - matter.js
+    - tone.js
+    - p5.strands
