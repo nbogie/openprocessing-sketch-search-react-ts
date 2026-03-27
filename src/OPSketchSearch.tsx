@@ -1,11 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
+import { ExportControls } from "./ExportControls.tsx";
+import { OPSketchCard } from "./OPSketchCard.tsx";
 import {
     filterForMatchingNames,
     searchForUserSketches,
 } from "./searchForUserSketches.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
-import { OPSketchCard } from "./OPSketchCard.tsx";
+import {
+    exportFilteredListToClipboard,
+    type ExportFormat,
+} from "./exportFilteredList.tsx";
 
 export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -53,6 +58,12 @@ export function OPSketchSketchSearch(): JSX.Element {
                     placeholder={"search term"}
                 />
             </div>
+            <ExportControls
+                exportControls={{
+                    exportFilteredList: (fmt: ExportFormat) =>
+                        exportFilteredListToClipboard(filteredSketches, fmt),
+                }}
+            />
             <SketchResultsMetaData searchResults={filteredSketches} />
             <div className={"sketchCardsList"}>
                 {filteredSketches.map((sketch) => {

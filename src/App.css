@@ -155,3 +155,16 @@ code {
 .sketchCard .title {
     font-weight: bold;
 }
+
+.exportControlsRow {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+    align-items: center;
+}
+
+.radioGroup {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+}

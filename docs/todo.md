@@ -9,3 +9,11 @@
         - all my sketches between date x and y
         - all my genuary sketches for this year
         - all my sketches that use webgpu
+
+- saved lists:
+    - "to study" / "study fork"
+    - example
+    - exercise
+    - genuary
+
+- add toast to give feedback about user actions
