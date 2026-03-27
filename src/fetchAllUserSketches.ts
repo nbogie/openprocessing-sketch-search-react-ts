@@ -8,7 +8,7 @@ export async function fetchAllUserSketches(
     }
 
     const baseURL = "https://openprocessing.org";
-    const unpaginatedURL = baseURL + `/api/uzer/${userId}/sketches`;
+    const unpaginatedURL = baseURL + `/api/user/${userId}/sketches`;
     let maybeHasMore = false;
     let safetyFetchCount = 0;
 
