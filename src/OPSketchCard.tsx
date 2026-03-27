@@ -20,11 +20,11 @@ export function OPSketchCard({
             : undefined;
     return (
         <div className="sketchCard" key={sketch.visualID}>
-            {wrapper && (
+            {/* {wrapper && (
                 <>
                     <div>Score: {wrapper.score}</div>
                 </>
-            )}
+            )} */}
             <div className="titleRow">
                 <SketchLink text={sketch.visualID.toString()} sketch={sketch} />
                 <div className="title">{sketch.title}</div>
