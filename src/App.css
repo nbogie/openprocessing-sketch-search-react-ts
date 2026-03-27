@@ -18,7 +18,7 @@ body {
     --accent: #aa3bff;
     --accent-bg: rgba(170, 59, 255, 0.1);
     --accent-border: rgba(170, 59, 255, 0.5);
-    --social-bg: rgba(244, 243, 236, 0.5);
+
     --shadow:
         rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
@@ -55,10 +55,6 @@ body {
         --shadow:
             rgba(0, 0, 0, 0.4) 0 10px 15px -3px,
             rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-    }
-
-    #social .button-icon {
-        filter: invert(1) brightness(2);
     }
 }
 
@@ -121,6 +117,11 @@ code {
     flex-direction: row;
     align-items: center;
     gap: 1rem;
+}
+.modeSelectors {
+    outline: 1px solid var(--accent-border);
+    border-radius: 0.3rem;
+    padding: 0 0.2rem;
 }
 
 .sketchCardsList {

@@ -113,8 +113,13 @@ export function OPSketchSketchSearch(): JSX.Element {
                 />
                 {data && (
                     <>
-                        Showing {filteredSketches.items.length}/{data.length}{" "}
-                        sketches
+                        <div>
+                            Showing{" "}
+                            <span style={{ fontWeight: "bold" }}>
+                                {filteredSketches.items.length}
+                            </span>{" "}
+                            / {data.length} sketches.
+                        </div>
                     </>
                 )}
             </div>

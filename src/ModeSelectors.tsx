@@ -11,7 +11,7 @@ export function ModeSelectors({
     >;
 }): JSX.Element {
     return (
-        <>
+        <div className="inputsRow modeSelectors">
             <ModeSelector
                 label={"P5"}
                 keyVal={"p5js"}
@@ -30,7 +30,7 @@ export function ModeSelectors({
                 includeModes={includeModes}
                 setIncludeModes={setIncludeModes}
             />
-        </>
+        </div>
     );
 }
 
