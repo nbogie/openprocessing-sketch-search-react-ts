@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState, type JSX, type SetStateAction } from "react";
+import { useState, type JSX } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { ExportControls } from "./ExportControls.tsx";
 import {
@@ -13,10 +13,10 @@ import {
     fuzzyFilterForMatchingNames,
     type FilteredSearchResults,
 } from "./filterSketches.ts";
+import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
-import { ModeSelectors } from "./ModeSelectors.tsx";
 
 export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
