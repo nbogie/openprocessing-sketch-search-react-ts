@@ -1,20 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { ExportControls } from "./ExportControls.tsx";
+import {
+    exportFilteredListToClipboard,
+    type ExportFormat,
+} from "./exportFilteredList.ts";
 import { OPSketchCard } from "./OPSketchCard.tsx";
 import {
     filterForMatchingNames,
     searchForUserSketches,
 } from "./searchForUserSketches.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
-import {
-    exportFilteredListToClipboard,
-    type ExportFormat,
-} from "./exportFilteredList.ts";
 
 export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
-    const [userId, setUserId] = useState(135249);
+
+    const [userId, setUserId, removeUserIdFromLocalStorage] =
+        useLocalStorage<number>("userId", 0);
 
     const { data, isPending, error, refetch, fetchStatus } = useQuery({
         queryKey: ["sketches", userId],
@@ -22,6 +25,7 @@ export function OPSketchSketchSearch(): JSX.Element {
         enabled: false,
     });
 
+    //TODO: don't search with missing or invalid userId
     const filteredSketches = data
         ? filterForMatchingNames(data, searchTerm)
         : [];
@@ -34,10 +38,13 @@ export function OPSketchSketchSearch(): JSX.Element {
                 <input
                     type="text"
                     onChange={(e) => setUserId(parseInt(e.target.value))}
-                    value={userId}
+                    value={userId || undefined}
                     placeholder={"userID"}
                 />
                 <button onClick={() => refetch()}>Get all sketches</button>
+                <button onClick={removeUserIdFromLocalStorage}>
+                    Remove userId from localStorage
+                </button>
                 <div>
                     <div>
                         Fetch Status: {fetchStatus}.{" "}
