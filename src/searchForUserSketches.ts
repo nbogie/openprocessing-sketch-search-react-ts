@@ -1,5 +1,9 @@
-import Fuse from "fuse.js";
+import Fuse, { type FuseResult } from "fuse.js";
 import type { OPSketch } from "./opUtils.ts";
+
+export type FilteredSearchResults =
+    | { type: "fuzzySearched"; items: FuseResult<OPSketch>[] }
+    | { type: "exactSearched"; items: OPSketch[] };
 
 export async function searchForUserSketches(
     userId: number,
@@ -48,9 +52,9 @@ export async function searchForUserSketches(
 export function fuzzyFilterForMatchingNames(
     sketches: OPSketch[],
     searchPattern: string,
-): OPSketch[] {
+): FilteredSearchResults {
     if (!searchPattern) {
-        return sketches;
+        return { type: "exactSearched", items: sketches };
     }
     //https://www.fusejs.io/demo.html
     const fuseOptions = {
@@ -64,9 +68,10 @@ export function fuzzyFilterForMatchingNames(
         // minMatchCharLength: 1,
         // location: 0,
         // threshold: 0.6,
-        // distance: 100,
+        //exact match
+        // distance: 300,
         // useExtendedSearch: false,
-        // ignoreLocation: false,
+        ignoreLocation: true,
         // ignoreFieldNorm: false,
         // fieldNormWeight: 1,
         keys: ["title", "description"] satisfies (keyof OPSketch)[],
@@ -74,18 +79,26 @@ export function fuzzyFilterForMatchingNames(
     //TODO: memoize this - if we can cap memory usage?
     const fuse = new Fuse(sketches, fuseOptions);
 
-    return fuse.search(searchPattern).map((fuseItem) => fuseItem.item);
+    const rawResults = fuse.search(searchPattern);
+
+    return {
+        type: "fuzzySearched",
+        items: rawResults,
+    };
 }
 
 export function filterForMatchingNames(
     sketches: OPSketch[],
     searchTerm: string,
-): OPSketch[] {
-    return sketches.filter((sk) =>
-        [sk.title, sk.description].some((field) =>
-            field.toLowerCase().includes(searchTerm.toLowerCase()),
+): FilteredSearchResults {
+    return {
+        type: "exactSearched",
+        items: sketches.filter((sk) =>
+            [sk.title, sk.description].some((field) =>
+                field.toLowerCase().includes(searchTerm.toLowerCase()),
+            ),
         ),
-    );
+    };
 }
 
 async function sleep(durationMillis: number): Promise<void> {
@@ -102,4 +115,14 @@ function makeIdentifyingHeadersAndInit(): RequestInit {
             "X-App-Name": "NeillSketchSearch/0.1",
         },
     };
+}
+
+export function extractOPSketchesFromSearchResults(
+    filteredSketches: FilteredSearchResults,
+): OPSketch[] {
+    if (filteredSketches.type === "exactSearched") {
+        return filteredSketches.items;
+    }
+
+    return filteredSketches.items.map((wrappedItem) => wrappedItem.item);
 }

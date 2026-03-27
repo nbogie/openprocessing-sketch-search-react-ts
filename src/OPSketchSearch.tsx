@@ -7,11 +7,14 @@ import {
     type ExportFormat,
 } from "./exportFilteredList.ts";
 import { OPSketchCard } from "./OPSketchCard.tsx";
+import type { OPSketch } from "./opUtils.ts";
 import {
+    extractOPSketchesFromSearchResults,
     filterForMatchingNames,
     // filterForMatchingNames,
     fuzzyFilterForMatchingNames,
     searchForUserSketches,
+    type FilteredSearchResults,
 } from "./searchForUserSketches.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 
@@ -27,11 +30,11 @@ export function OPSketchSketchSearch(): JSX.Element {
         enabled: false,
     });
 
-    const filteredSketches = data
+    const filteredSketches: FilteredSearchResults = data
         ? useFuzzySearch
             ? fuzzyFilterForMatchingNames(data, searchTerm)
             : filterForMatchingNames(data, searchTerm)
-        : [];
+        : { type: "exactSearched", items: [] as OPSketch[] };
 
     return (
         <main>
@@ -91,24 +94,49 @@ export function OPSketchSketchSearch(): JSX.Element {
                 </label>
                 {data && (
                     <>
-                        Showing {filteredSketches.length}/{data.length} sketches
+                        Showing {filteredSketches.items.length}/{data.length}{" "}
+                        sketches
                     </>
                 )}
             </div>
             <ExportControls
                 exportControls={{
-                    exportFilteredList: (fmt: ExportFormat) =>
-                        exportFilteredListToClipboard(filteredSketches, fmt),
+                    exportFilteredList: (fmt: ExportFormat) => {
+                        return exportFilteredListToClipboard(
+                            extractOPSketchesFromSearchResults(
+                                filteredSketches,
+                            ),
+                            fmt,
+                        );
+                    },
                 }}
             />
-            <SketchResultsMetaData searchResults={filteredSketches} />
+            <SketchResultsMetaData
+                searchResults={extractOPSketchesFromSearchResults(
+                    filteredSketches,
+                )}
+            />
 
             <div className={"sketchCardsList"}>
-                {filteredSketches.map((sketch) => {
-                    return (
-                        <OPSketchCard key={sketch.visualID} sketch={sketch} />
-                    );
-                })}
+                {filteredSketches.type === "fuzzySearched"
+                    ? filteredSketches.items.map((wrapper) => (
+                          <OPSketchCard
+                              key={wrapper.item.visualID}
+                              sketchOrWrapper={{
+                                  type: "wrapped",
+                                  wrapper: wrapper,
+                              }}
+                          />
+                      ))
+                    : filteredSketches.items.map((sketch) => (
+                          <OPSketchCard
+                              key={sketch.visualID}
+                              sketchOrWrapper={{
+                                  type: "sketch",
+                                  sketch: sketch,
+                              }}
+                          />
+                      ))}
             </div>
             <footer style={{ alignSelf: "stretch" }}>
                 <hr />
