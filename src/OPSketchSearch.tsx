@@ -33,7 +33,7 @@ export function OPSketchSketchSearch(): JSX.Element {
     return (
         <main>
             <h1>OpenProcessing Sketch Search</h1>
-            <div className="searchInputs">
+            <div className="inputsRow">
                 userID:{" "}
                 <input
                     type="text"
@@ -51,23 +51,26 @@ export function OPSketchSketchSearch(): JSX.Element {
                                 <>Re-fetch all sketches from API!</>
                             )}
                         </button>
-                        <button onClick={removeUserIdFromLocalStorage}>
-                            Remove userId from localStorage
-                        </button>
                     </>
                 )}
                 <div>
                     <div>
-                        Fetch Status: {fetchStatus}.{" "}
-                        {isPending ? "PENDING" : "-"}
+                        <div>Fetch Status: {fetchStatus}</div>
+                        <div>
+                            {isPending ? "No fetch yet." : "Data loaded."}
+                        </div>
                     </div>
                     <div>
-                        {error ? "ERROR: " + JSON.stringify(error) : "no error"}
+                        {error ? (
+                            "ERROR: " + JSON.stringify(error)
+                        ) : (
+                            <>&nbsp;</>
+                        )}
                     </div>
                 </div>
             </div>
 
-            <div>
+            <div className="inputsRow">
                 Filter sketches:{" "}
                 <input
                     type="text"
@@ -75,6 +78,11 @@ export function OPSketchSketchSearch(): JSX.Element {
                     value={searchTerm}
                     placeholder={"search term"}
                 />
+                {data && (
+                    <>
+                        Showing {filteredSketches.length}/{data.length} sketches
+                    </>
+                )}
             </div>
             <ExportControls
                 exportControls={{
@@ -83,13 +91,7 @@ export function OPSketchSketchSearch(): JSX.Element {
                 }}
             />
             <SketchResultsMetaData searchResults={filteredSketches} />
-            <div>
-                {data && (
-                    <>
-                        Showing {filteredSketches.length}/{data.length} sketches
-                    </>
-                )}
-            </div>
+
             <div className={"sketchCardsList"}>
                 {filteredSketches.map((sketch) => {
                     return (
@@ -97,6 +99,12 @@ export function OPSketchSketchSearch(): JSX.Element {
                     );
                 })}
             </div>
+            <footer style={{ alignSelf: "stretch" }}>
+                <hr />
+                <button onClick={removeUserIdFromLocalStorage}>
+                    Remove userId from localStorage
+                </button>
+            </footer>
         </main>
     );
 }

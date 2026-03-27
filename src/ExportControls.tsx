@@ -11,7 +11,7 @@ export function ExportControls({
 }): JSX.Element {
     const [format, setFormat] = useState<ExportFormat>("idOnly");
     return (
-        <div className={"exportControlsRow"}>
+        <div className={"inputsRow"}>
             <button onClick={() => exportControls.exportFilteredList(format)}>
                 Export filtered list
             </button>
