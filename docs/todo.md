@@ -1,5 +1,10 @@
 # todo
 
+- feedback to openprocessing about hasMore header:
+    - unreadable from browser
+    - only present if a limit parameter is passed
+- ask openprocessing: any custom headers accepted / wanted for identifying client?
+
 - add toast to give feedback about user actions
 - allow create, save (local storage) and export to json of lists of sketches (e.g. matching certain search results):
     - export:
