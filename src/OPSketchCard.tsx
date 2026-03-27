@@ -4,10 +4,15 @@ import { type OPSketch, makeSketchURL } from "./opUtils.ts";
 export function OPSketchCard({ sketch }: { sketch: OPSketch }): JSX.Element {
     return (
         <div className="sketchCard" key={sketch.visualID}>
-            <div>
-                <a href={makeSketchURL(sketch.visualID)}>{sketch.visualID}</a>
+            <div className="titleRow">
+                <a
+                    style={{ fontSize: "smaller" }}
+                    href={makeSketchURL(sketch.visualID)}
+                >
+                    {sketch.visualID}
+                </a>
+                <div className="title">{sketch.title}</div>
             </div>
-            <div>{sketch.title}</div>
             <div>{sketch.description}</div>
             <div>{sketch.mode}</div>
             <div>{sketch.updatedOn}</div>
