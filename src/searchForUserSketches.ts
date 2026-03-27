@@ -1,3 +1,4 @@
+import Fuse from "fuse.js";
 import type { OPSketch } from "./opUtils.ts";
 
 export async function searchForUserSketches(
@@ -15,11 +16,10 @@ export async function searchForUserSketches(
     const allData = [];
 
     do {
-        const maxBatchSize = 900;
+        const maxBatchSize = 980;
         const url: string = `${unpaginatedURL}?limit=${maxBatchSize}&offset=${allData.length}`;
 
         if (allData.length > 0) {
-            //delay before next fetch
             const sleepDurationMillis = 1000;
             await sleep(sleepDurationMillis);
         }
@@ -32,12 +32,10 @@ export async function searchForUserSketches(
         const batchData = await response.json();
         allData.push(...batchData);
 
-        // doesAPIHaveMore(response);
-
         maybeHasMore = batchData.length === maxBatchSize;
     } while (maybeHasMore && safetyFetchCount < 5);
 
-    //todo: use zod or similar to validate this batchData
+    //todo: use zod or similar to validate this returned data
     return allData as OPSketch[];
 }
 
@@ -46,6 +44,38 @@ export async function searchForUserSketches(
 //     const headerRaw = response.headers.get("hasMore");
 //     return headerRaw !== null && headerRaw.toLowerCase() === "true";
 // }
+
+export function fuzzyFilterForMatchingNames(
+    sketches: OPSketch[],
+    searchPattern: string,
+): OPSketch[] {
+    if (!searchPattern) {
+        return sketches;
+    }
+    //https://www.fusejs.io/demo.html
+    const fuseOptions = {
+        isCaseSensitive: false,
+        includeScore: true,
+        // ignoreDiacritics: false,
+        shouldSort: true,
+        //include the indices of the matched characters (for highlighting)
+        // includeMatches: false,
+        // findAllMatches: false,
+        // minMatchCharLength: 1,
+        // location: 0,
+        // threshold: 0.6,
+        // distance: 100,
+        // useExtendedSearch: false,
+        // ignoreLocation: false,
+        // ignoreFieldNorm: false,
+        // fieldNormWeight: 1,
+        keys: ["title", "description"] satisfies (keyof OPSketch)[],
+    };
+    //TODO: memoize this - if we can cap memory usage?
+    const fuse = new Fuse(sketches, fuseOptions);
+
+    return fuse.search(searchPattern).map((fuseItem) => fuseItem.item);
+}
 
 export function filterForMatchingNames(
     sketches: OPSketch[],

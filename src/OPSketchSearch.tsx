@@ -9,13 +9,15 @@ import {
 import { OPSketchCard } from "./OPSketchCard.tsx";
 import {
     filterForMatchingNames,
+    // filterForMatchingNames,
+    fuzzyFilterForMatchingNames,
     searchForUserSketches,
 } from "./searchForUserSketches.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 
 export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
-
+    const [useFuzzySearch, setUseFuzzySearch] = useState(false);
     const [userId, setUserId, removeUserIdFromLocalStorage] =
         useLocalStorage<number>("userId", 0);
 
@@ -25,9 +27,10 @@ export function OPSketchSketchSearch(): JSX.Element {
         enabled: false,
     });
 
-    //TODO: don't search with missing or invalid userId
     const filteredSketches = data
-        ? filterForMatchingNames(data, searchTerm)
+        ? useFuzzySearch
+            ? fuzzyFilterForMatchingNames(data, searchTerm)
+            : filterForMatchingNames(data, searchTerm)
         : [];
 
     return (
@@ -78,6 +81,14 @@ export function OPSketchSketchSearch(): JSX.Element {
                     value={searchTerm}
                     placeholder={"search term"}
                 />
+                <label>
+                    Fuzzy?
+                    <input
+                        type="checkbox"
+                        checked={useFuzzySearch}
+                        onChange={() => setUseFuzzySearch((prev) => !prev)}
+                    />
+                </label>
                 {data && (
                     <>
                         Showing {filteredSketches.length}/{data.length} sketches

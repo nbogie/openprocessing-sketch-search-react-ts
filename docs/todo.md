@@ -1,5 +1,20 @@
 # todo
 
+- allow filter by sketch type (p5js, html, other (legacy ones?)
+
+- fuzzy search for filtering?
+
+- add nice tooltips to clarify what stuff does
+
+- add toast to give feedback about user actions
+
+- add boolean logic for filtering
+
+- scrollbars: blech
+
+- mobile?
+    - for mobile maybe just show first 10 or so results. Most people just trying to find a specific sketch, not browse
+
 - don't show userId by default once it's set? (if all use cases are for consuming our own stuff).
     - tho, teachers might have multiple accounts.
 
@@ -9,7 +24,6 @@
 
 - ask openprocessing: any custom headers accepted / wanted for identifying client?
 
-- add toast to give feedback about user actions
 - allow create, save (local storage) and export to json of lists of sketches (e.g. matching certain search results):
     - export:
         - at least json.
