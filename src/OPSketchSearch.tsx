@@ -25,27 +25,33 @@ export function OPSketchSketchSearch(): JSX.Element {
         <section>
             <h2>OpenProcessing Sketch Search</h2>
             <div className="searchInputs">
+                userID:{" "}
                 <input
                     type="text"
                     onChange={(e) => setUserId(parseInt(e.target.value))}
                     value={userId}
                     placeholder={"userID"}
                 />
+                <button onClick={() => refetch()}>Get all sketches</button>
+                <div>
+                    <div>
+                        Fetch Status: {fetchStatus}.{" "}
+                        {isPending ? "PENDING" : "-"}
+                    </div>
+                    <div>
+                        {error ? "ERROR: " + JSON.stringify(error) : "no error"}
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                Filter sketches:{" "}
                 <input
                     type="text"
                     onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
                     placeholder={"search term"}
                 />
-                <button onClick={() => refetch()}>search</button>
-            </div>
-            <div>
-                <div>
-                    Fetch Status: {fetchStatus}. {isPending ? "PENDING" : "-"}
-                </div>
-                <div>
-                    {error ? "ERROR: " + JSON.stringify(error) : "no error"}
-                </div>
             </div>
             <SketchResultsMetaData searchResults={filteredSketches} />
             <div className={"sketchCardsList"}>
