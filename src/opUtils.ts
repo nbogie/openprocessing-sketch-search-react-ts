@@ -1,4 +1,12 @@
 //finding: tags are not included on the search result items
+
+export type OPSketchMode = "p5js" | "pjs" | "html";
+export const allOPSketchModes = [
+    "p5js",
+    "html",
+    "pjs",
+] as const satisfies OPSketchMode[];
+
 export interface OPSketch {
     visualID: number;
     title: string;
@@ -8,7 +16,7 @@ export interface OPSketch {
     isDraft: number;
     createdOn: string;
     updatedOn: string;
-    mode: string; //"p5js" | ?
+    mode: OPSketchMode;
 }
 
 export function makeSketchURL(visualID: number): string {

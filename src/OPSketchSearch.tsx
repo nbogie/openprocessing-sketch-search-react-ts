@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState, type JSX } from "react";
+import { useState, type JSX, type SetStateAction } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { ExportControls } from "./ExportControls.tsx";
 import {
@@ -14,12 +14,22 @@ import {
     type FilteredSearchResults,
 } from "./filterSketches.ts";
 import { OPSketchList } from "./OPSketchList.tsx";
-import type { OPSketch } from "./opUtils.ts";
+import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
+import { ModeSelectors } from "./ModeSelectors.tsx";
 
 export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
     const [useFuzzySearch, setUseFuzzySearch] = useState(false);
+
+    type ModeCheckboxStates = Record<OPSketchMode, boolean>;
+
+    const [includeModes, setIncludeModes] = useState<ModeCheckboxStates>({
+        p5js: false,
+        html: false,
+        pjs: false,
+    });
+
     const [userId, setUserId, removeUserIdFromLocalStorage] =
         useLocalStorage<number>("userId", 0);
 
@@ -30,10 +40,21 @@ export function OPSketchSketchSearch(): JSX.Element {
         retry: false,
     });
 
+    function sketchesMatchingModes(sketch: OPSketch) {
+        const { p5js, html, pjs } = includeModes;
+
+        if (!html && !p5js && !pjs) {
+            return true;
+        }
+        return includeModes[sketch.mode];
+    }
+    const sketchesFilteredToModes: OPSketch[] = data
+        ? data.filter(sketchesMatchingModes)
+        : [];
     const filteredSketches: FilteredSearchResults = data
         ? useFuzzySearch
-            ? fuzzyFilterForMatchingNames(data, searchTerm)
-            : filterForMatchingNames(data, searchTerm)
+            ? fuzzyFilterForMatchingNames(sketchesFilteredToModes, searchTerm)
+            : filterForMatchingNames(sketchesFilteredToModes, searchTerm)
         : { type: "exactSearched", items: [] as OPSketch[] };
 
     return (
@@ -86,6 +107,10 @@ export function OPSketchSketchSearch(): JSX.Element {
                         onChange={() => setUseFuzzySearch((prev) => !prev)}
                     />
                 </label>
+                <ModeSelectors
+                    includeModes={includeModes}
+                    setIncludeModes={setIncludeModes}
+                />
                 {data && (
                     <>
                         Showing {filteredSketches.items.length}/{data.length}{" "}

@@ -1,14 +1,10 @@
 # todo
 
-- allow filter by sketch type (p5js, html, other (legacy ones?)
-
-- fuzzy search for filtering?
-
 - add nice tooltips to clarify what stuff does
 
 - add toast to give feedback about user actions
 
-- add boolean logic for filtering
+- add boolean logic for filtering?
 
 - scrollbars: blech
 
@@ -23,6 +19,8 @@
     - only present if a limit parameter is passed
 
 - ask openprocessing: any custom headers accepted / wanted for identifying client?
+
+- ask openprocessing: any chance of including tags in data? (probably expensive because db structure)
 
 - allow create, save (local storage) and export to json of lists of sketches (e.g. matching certain search results):
     - export:
@@ -46,6 +44,8 @@
 
 ## done:
 
+- allow filter by sketch type (p5js, html, other (legacy ones?)
+- fuzzy search for filtering?
 - don't search without a userId
 - don't show "get all sketches" without a valid userid present
 - store userId in local storage
