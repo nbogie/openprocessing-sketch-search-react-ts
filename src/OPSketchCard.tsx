@@ -1,16 +1,12 @@
 import type { JSX } from "react";
-import { type OPSketch, makeSketchURL } from "./opUtils.ts";
+import { type OPSketch } from "./opUtils.ts";
+import { SketchLink } from "./SketchLink.tsx";
 
 export function OPSketchCard({ sketch }: { sketch: OPSketch }): JSX.Element {
     return (
         <div className="sketchCard" key={sketch.visualID}>
             <div className="titleRow">
-                <a
-                    style={{ fontSize: "smaller" }}
-                    href={makeSketchURL(sketch.visualID)}
-                >
-                    {sketch.visualID}
-                </a>
+                <SketchLink text={sketch.visualID.toString()} sketch={sketch} />
                 <div className="title">{sketch.title}</div>
             </div>
             <div>{sketch.description}</div>

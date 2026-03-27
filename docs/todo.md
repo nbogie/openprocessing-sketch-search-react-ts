@@ -16,6 +16,7 @@
     - example
     - exercise
     - genuary
-    - matter.js
-    - tone.js
+    - matter.js / matterjs
+    - tone.js / tonejs
     - p5.strands
+    - socket.io / socketio

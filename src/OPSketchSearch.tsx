@@ -10,7 +10,7 @@ import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 import {
     exportFilteredListToClipboard,
     type ExportFormat,
-} from "./exportFilteredList.tsx";
+} from "./exportFilteredList.ts";
 
 export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -65,6 +65,13 @@ export function OPSketchSketchSearch(): JSX.Element {
                 }}
             />
             <SketchResultsMetaData searchResults={filteredSketches} />
+            <div>
+                {data && (
+                    <>
+                        Showing {filteredSketches.length}/{data.length} sketches
+                    </>
+                )}
+            </div>
             <div className={"sketchCardsList"}>
                 {filteredSketches.map((sketch) => {
                     return (
