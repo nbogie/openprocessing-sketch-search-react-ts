@@ -1,4 +1,4 @@
-import { Button } from "@mantine/core";
+import { Button, Group, Radio } from "@mantine/core";
 import { IconCopy } from "@tabler/icons-react";
 import { useState, type JSX } from "react";
 import type { ExportFormat } from "./exportFilteredList.tsx";
@@ -36,22 +36,22 @@ function FormatRadioGroup({
     const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormat(e.target.value as ExportFormat);
     };
-    const renderRadio = (value: ExportFormat) => (
-        <label key={value}>
-            <input
-                type="radio"
-                value={value}
-                checked={format === value}
-                onChange={handleOptionChange}
-            />
-            {value.charAt(0).toUpperCase() + value.slice(1)}
-        </label>
-    );
+    const allFormats: ExportFormat[] = ["idOnly", "short", "full"];
+
     return (
-        <div className="radioGroup">
-            {(["idOnly", "short", "full"] satisfies ExportFormat[]).map(
-                renderRadio,
-            )}
-        </div>
+        <Radio.Group name="ExportFormat" label="Export format">
+            <Group mt="xs">
+                {allFormats.map((fmt) => {
+                    return (
+                        <Radio
+                            value={fmt}
+                            label={fmt}
+                            onChange={handleOptionChange}
+                            checked={fmt === format}
+                        />
+                    );
+                })}
+            </Group>
+        </Radio.Group>
     );
 }
