@@ -9,7 +9,11 @@ export function SketchLink({
     sketch: OPSketch;
 }): JSX.Element {
     return (
-        <a href={makeSketchURL(sketch.visualID)} target="_blank" rel="noreferrer">
+        <a
+            href={makeSketchURL(sketch.visualID)}
+            target="_blank"
+            rel="noopener noreferrer"
+        >
             {text ? (
                 text
             ) : (

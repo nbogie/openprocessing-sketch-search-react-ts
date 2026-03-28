@@ -216,6 +216,7 @@ export function OPSketchSearch(): JSX.Element {
                     href="https://tabler.io/icons"
                     label="browse tabler.io/icons"
                     target="_blank"
+                    rel="noopener noreferrer"
                 />
             </footer>
         </main>

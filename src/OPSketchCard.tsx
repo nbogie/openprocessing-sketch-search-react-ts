@@ -1,8 +1,9 @@
-import { Card, Group, Title, Tooltip } from "@mantine/core";
+import { Text, Card, Group, Title, Tooltip } from "@mantine/core";
 import type { FuseResult } from "fuse.js";
 import type { JSX } from "react";
 import { type OPSketch } from "./opUtils.ts";
 import { SketchLink } from "./SketchLink.tsx";
+import { linkifyDescription } from "./linkifyDescription.tsx";
 
 export function OPSketchCard({
     sketchOrWrapper,
@@ -40,19 +41,30 @@ export function OPSketchCard({
                 </>
             )} */}
 
-                <div>{sketch.description}</div>
-                <div>{sketch.mode}</div>
+                <div>{linkifyDescription(sketch.description)}</div>
 
-                <Tooltip label={`Created: ${sketch.createdOn}`} openDelay={800}>
-                    <div>Created: {sketch.createdOn?.split(" ").at(0)}</div>
-                </Tooltip>
-                <Tooltip label={`Updated: ${sketch.updatedOn}`} openDelay={800}>
-                    <div>
-                        Updated:{" "}
-                        {sketch.updatedOn
-                            ? sketch.updatedOn.split(" ").at(0)
-                            : "never"}
-                    </div>
+                <Text size="xs" c="dimmed">
+                    Mode: {sketch.mode}
+                </Text>
+                <Tooltip
+                    label={
+                        <>
+                            <Text size="sm">Created: {sketch.createdOn}</Text>
+                            <Text size="sm">Updated: {sketch.updatedOn}</Text>
+                        </>
+                    }
+                    openDelay={800}
+                >
+                    <Group style={{ columnGap: "1rem", rowGap: "0rem" }}>
+                        <Text size="xs" c="dimmed">
+                            Created:{" "}
+                            {sketch.createdOn?.split(" ").at(0) ?? "null"}
+                        </Text>
+                        <Text size="xs" c="dimmed">
+                            Updated:{" "}
+                            {sketch.updatedOn?.split(" ").at(0) ?? "null"}
+                        </Text>
+                    </Group>
                 </Tooltip>
             </>
         </Card>
