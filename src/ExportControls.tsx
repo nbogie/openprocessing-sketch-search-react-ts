@@ -1,3 +1,5 @@
+import { Button } from "@mantine/core";
+import { IconCopy } from "@tabler/icons-react";
 import { useState, type JSX } from "react";
 import type { ExportFormat } from "./exportFilteredList.tsx";
 
@@ -12,12 +14,13 @@ export function ExportControls({
     const [format, setFormat] = useState<ExportFormat>("idOnly");
     return (
         <div className="inputsRow">
-            <button
-                type="button"
+            <Button
+                variant="default"
+                rightSection={<IconCopy />}
                 onClick={() => exportControls.exportFilteredList(format)}
             >
                 Export filtered list
-            </button>
+            </Button>
             <FormatRadioGroup format={format} setFormat={setFormat} />
         </div>
     );
