@@ -141,10 +141,9 @@ export function OPSketchSearch(): JSX.Element {
                 </div>
             </Group>
 
-            <Group>
+            <Group align="flex-end">
                 <TextInput
                     label="Filter sketches"
-                    description="matches title or description"
                     onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
                     placeholder="search term"

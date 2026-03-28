@@ -13,7 +13,7 @@ export function ExportControls({
 }): JSX.Element {
     const [format, setFormat] = useState<ExportFormat>("idOnly");
     return (
-        <Group>
+        <Group align="flex-end">
             <Button
                 variant="default"
                 rightSection={<IconCopy />}
