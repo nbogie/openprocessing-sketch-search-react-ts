@@ -1,5 +1,7 @@
 # todo
 
+- fix localstorage for userID
+
 - add nice tooltips to clarify what stuff does
 
 - add boolean logic for filtering?
