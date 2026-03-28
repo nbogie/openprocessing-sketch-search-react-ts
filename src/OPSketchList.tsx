@@ -10,7 +10,7 @@ export function OPSketchList({
 }): JSX.Element {
     return (
         <SimpleGrid
-            cols={{ base: 1, sm: 2, lg: 3 }}
+            cols={{ base: 1, xs: 2, sm: 3, lg: 4, xl: 5 }}
             spacing={{ base: 10, sm: "md" }}
         >
             {filteredSketches.type === "fuzzySearched"
