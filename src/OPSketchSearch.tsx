@@ -12,7 +12,7 @@ import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
 import { toast } from "sonner";
-import { ExportControls } from "./ExportControls.tsx";
+import { ExportSplitButton } from "./ExportControls.tsx";
 import {
     exportFilteredListToClipboard,
     type ExportFormat,
@@ -172,7 +172,7 @@ export function OPSketchSearch(): JSX.Element {
                     </>
                 )}
             </Group>
-            <ExportControls
+            <ExportSplitButton
                 exportControls={{
                     exportFilteredList: (fmt: ExportFormat) => {
                         exportFilteredListToClipboard(

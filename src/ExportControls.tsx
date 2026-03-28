@@ -1,69 +1,76 @@
-import { Button, Fieldset, Group, Radio, Tooltip } from "@mantine/core";
-import { IconCopy } from "@tabler/icons-react";
-import { useState, type JSX } from "react";
+import { ActionIcon, Button, Group, Menu, Stack, Text } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
+import { IconChevronDown, IconCopy } from "@tabler/icons-react";
+import { type JSX } from "react";
 import type { ExportFormat } from "./exportFilteredList.tsx";
 
 type ExportControls = {
     exportFilteredList: (format: ExportFormat) => void;
 };
-export function ExportControls({
+export function ExportSplitButton({
     exportControls,
 }: {
     exportControls: ExportControls;
 }): JSX.Element {
-    const [format, setFormat] = useState<ExportFormat>("idOnly");
-    return (
-        <Group align="flex-end">
-            <Button
-                variant="default"
-                rightSection={<IconCopy />}
-                onClick={() => exportControls.exportFilteredList(format)}
-            >
-                Copy filtered list
-            </Button>
-            <FormatRadioGroup format={format} setFormat={setFormat} />
-        </Group>
-    );
-}
-
-function FormatRadioGroup({
-    format,
-    setFormat,
-}: {
-    format: ExportFormat;
-    setFormat: (ex: ExportFormat) => void;
-}): JSX.Element {
-    const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormat(e.target.value as ExportFormat);
-    };
+    const [format, setFormat] = useLocalStorage<ExportFormat>({
+        key: "export-format",
+        defaultValue: "idOnly",
+    });
     const allFormats: { fmt: ExportFormat; description: string }[] = [
-        { fmt: "idOnly", description: "only id" },
-        { fmt: "linkOnly", description: "only link" },
-        { fmt: "short", description: "only id and title" },
+        { fmt: "idOnly", description: "ids" },
+        { fmt: "linkOnly", description: "links" },
+        { fmt: "short", description: "id & title" },
         { fmt: "full", description: "all properties" },
     ];
 
     return (
-        <Fieldset legend="Export format">
-            <Group>
-                {allFormats.map((fmtInfo) => {
-                    return (
-                        <Tooltip
-                            label={fmtInfo.description}
-                            openDelay={500}
-                            refProp="rootRef"
-                            key={fmtInfo.fmt}
-                        >
-                            <Radio
-                                value={fmtInfo.fmt}
-                                label={fmtInfo.fmt}
-                                onChange={handleOptionChange}
-                                checked={fmtInfo.fmt === format}
-                            />
-                        </Tooltip>
-                    );
-                })}
-            </Group>
-        </Fieldset>
+        <Group wrap="nowrap" gap={0}>
+            <Button
+                onClick={() => exportControls.exportFilteredList(format)}
+                leftSection={<IconCopy size={16} />}
+                variant="default"
+                style={{
+                    //don't round these corners
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                    // borderRightWidth: `${rem(1)} solid var(--mantine-color-body)`,
+                    borderRightWidth: "1px",
+                }}
+            >
+                Copy list (format: {format})
+            </Button>
+
+            <Menu position="bottom-end" withinPortal>
+                <Menu.Target>
+                    <ActionIcon
+                        variant="default"
+                        size={36} //TODO: this is standard button height, but brittle
+                        style={{
+                            //don't round these corners
+                            borderTopLeftRadius: 0,
+                            borderBottomLeftRadius: 0,
+                        }}
+                    >
+                        <IconChevronDown size={16} stroke={1.5} />
+                    </ActionIcon>
+                </Menu.Target>
+
+                <Menu.Dropdown>
+                    <Menu.Label>Exports will be an array of...</Menu.Label>
+                    {allFormats.map((info) => (
+                        <Menu.Item onClick={() => setFormat(info.fmt)}>
+                            <Stack gap={0}>
+                                <Text size="sm" fw={500}>
+                                    {info.fmt}
+                                </Text>
+                                <Text size="xs" c="dimmed">
+                                    {info.description} from each sketch
+                                </Text>
+                            </Stack>
+                        </Menu.Item>
+                    ))}
+                </Menu.Dropdown>
+            </Menu>
+        </Group>
     );
 }
