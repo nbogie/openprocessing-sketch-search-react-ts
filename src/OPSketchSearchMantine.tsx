@@ -9,7 +9,7 @@ export function OPSketchSearchMantine() {
     return (
         <AppShell
             padding="md"
-            header={{ height: 60 }}
+            header={{ height: { base: 100, sm: 60 } }}
             navbar={{
                 width: 300,
                 breakpoint: "sm",
@@ -17,7 +17,7 @@ export function OPSketchSearchMantine() {
             }}
         >
             <AppShell.Header>
-                <Group h="100%" px="md">
+                <Group h="100%" px="md" wrap="nowrap">
                     <Burger
                         opened={mobileOpened}
                         onClick={toggleMobile}
@@ -30,7 +30,7 @@ export function OPSketchSearchMantine() {
                         visibleFrom="sm"
                         size="sm"
                     />
-                    <Title>OpenProcessing Sketch Search</Title>
+                    <Title order={2}>OpenProcessing Sketch&nbsp;Search</Title>
                 </Group>
             </AppShell.Header>
 
