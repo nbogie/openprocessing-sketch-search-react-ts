@@ -81,14 +81,17 @@ export function OPSketchSketchSearch(): JSX.Element {
                 userID:{" "}
                 <input
                     type="text"
-                    onChange={(e) => setUserId(parseInt(e.target.value))}
+                    onChange={(e) => setUserId(parseInt(e.target.value, 10))}
                     // if it's zero or undefined
                     value={userId || ""}
-                    placeholder={"userID"}
+                    placeholder="userID"
                 />
                 {userId && (
                     <>
-                        <button onClick={() => refetchWithToast()}>
+                        <button
+                            type="button"
+                            onClick={() => refetchWithToast()}
+                        >
                             {data === undefined ? (
                                 <>Fetch all sketches from API</>
                             ) : (
@@ -104,7 +107,7 @@ export function OPSketchSketchSearch(): JSX.Element {
                             {isPending ? "No fetch yet." : "Data loaded."}
                         </div>
                     </div>
-                    <div>{error ? "ERROR: " + error.message : <>&nbsp;</>}</div>
+                    <div>{error ? `ERROR: ${error.message}` : <>&nbsp;</>}</div>
                 </div>
             </div>
 
@@ -114,7 +117,7 @@ export function OPSketchSketchSearch(): JSX.Element {
                     type="text"
                     onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
-                    placeholder={"search term"}
+                    placeholder="search term"
                 />
                 <label>
                     Fuzzy?
@@ -162,7 +165,7 @@ export function OPSketchSketchSearch(): JSX.Element {
 
             <footer style={{ alignSelf: "stretch" }}>
                 <hr />
-                <button onClick={removeUserIdFromLocalStorage}>
+                <button type="button" onClick={removeUserIdFromLocalStorage}>
                     Remove userId from localStorage
                 </button>
             </footer>

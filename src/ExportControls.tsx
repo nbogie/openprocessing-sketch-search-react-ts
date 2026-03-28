@@ -11,8 +11,11 @@ export function ExportControls({
 }): JSX.Element {
     const [format, setFormat] = useState<ExportFormat>("idOnly");
     return (
-        <div className={"inputsRow"}>
-            <button onClick={() => exportControls.exportFilteredList(format)}>
+        <div className="inputsRow">
+            <button
+                type="button"
+                onClick={() => exportControls.exportFilteredList(format)}
+            >
                 Export filtered list
             </button>
             <FormatRadioGroup format={format} setFormat={setFormat} />

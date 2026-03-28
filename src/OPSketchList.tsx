@@ -8,14 +8,14 @@ export function OPSketchList({
     filteredSketches: FilteredSearchResults;
 }): JSX.Element {
     return (
-        <div className={"sketchCardsList"}>
+        <div className="sketchCardsList">
             {filteredSketches.type === "fuzzySearched"
                 ? filteredSketches.items.map((wrapper) => (
                       <OPSketchCard
                           key={wrapper.item.visualID}
                           sketchOrWrapper={{
                               type: "wrapped",
-                              wrapper: wrapper,
+                              wrapper,
                           }}
                       />
                   ))
@@ -24,7 +24,7 @@ export function OPSketchList({
                           key={sketch.visualID}
                           sketchOrWrapper={{
                               type: "sketch",
-                              sketch: sketch,
+                              sketch,
                           }}
                       />
                   ))}

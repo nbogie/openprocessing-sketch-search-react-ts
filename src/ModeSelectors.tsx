@@ -13,20 +13,20 @@ export function ModeSelectors({
     return (
         <div className="inputsRow modeSelectors">
             <ModeSelector
-                label={"P5"}
-                keyVal={"p5js"}
+                label="P5"
+                keyVal="p5js"
                 includeModes={includeModes}
                 setIncludeModes={setIncludeModes}
             />
             <ModeSelector
-                label={"html"}
-                keyVal={"html"}
+                label="html"
+                keyVal="html"
                 includeModes={includeModes}
                 setIncludeModes={setIncludeModes}
             />
             <ModeSelector
-                label={"(legacy) Pjs"}
-                keyVal={"pjs"}
+                label="(legacy) Pjs"
+                keyVal="pjs"
                 includeModes={includeModes}
                 setIncludeModes={setIncludeModes}
             />
