@@ -1,5 +1,6 @@
 # todo
 
+- change linkOnly export formatter to use markdown bulleted list, not JSON (e.g. for a discord post / a readme)
 - add saved searches.
     - A button to save any search (includes search term, fuzzy switch, mode toggles).
     - prev searches maybe we can show...
@@ -36,6 +37,7 @@
 
 ## done:
 
+- add linkOnly export formatter
 - fix localstorage for userID
 - add toast to give feedback about user actions
 - allow filter by sketch type (p5js, html, other (legacy ones?)

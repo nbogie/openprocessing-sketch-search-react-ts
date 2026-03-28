@@ -38,6 +38,7 @@ function FormatRadioGroup({
     };
     const allFormats: { fmt: ExportFormat; description: string }[] = [
         { fmt: "idOnly", description: "only id" },
+        { fmt: "linkOnly", description: "only link" },
         { fmt: "short", description: "only id and title" },
         { fmt: "full", description: "all properties" },
     ];
