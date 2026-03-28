@@ -4,12 +4,12 @@ import "@mantine/core/styles.css";
 
 import { MantineProvider } from "@mantine/core";
 import "./App.css";
-import { OPSketchSketchSearch } from "./OPSketchSearch.tsx";
+import { OPSketchSearchMantine } from "./OPSketchSearchMantine.tsx";
 
 function App() {
     return (
-        <MantineProvider>
-            <OPSketchSketchSearch />
+        <MantineProvider defaultColorScheme="auto">
+            <OPSketchSearchMantine />
         </MantineProvider>
     );
 }

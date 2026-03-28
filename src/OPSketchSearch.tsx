@@ -76,7 +76,6 @@ export function OPSketchSketchSearch(): JSX.Element {
 
     return (
         <main>
-            <h1>OpenProcessing Sketch Search</h1>
             <div className="inputsRow">
                 userID:{" "}
                 <input
