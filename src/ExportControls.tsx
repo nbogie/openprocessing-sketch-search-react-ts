@@ -51,6 +51,7 @@ function FormatRadioGroup({
                             label={fmtInfo.description}
                             openDelay={500}
                             refProp="rootRef"
+                            key={fmtInfo.fmt}
                         >
                             <Radio
                                 value={fmtInfo.fmt}
