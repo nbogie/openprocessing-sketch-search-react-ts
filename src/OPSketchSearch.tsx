@@ -7,11 +7,11 @@ import {
     TextInput,
     Tooltip,
 } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
 import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
 import { toast } from "sonner";
-import { useLocalStorage } from "usehooks-ts";
 import { ExportControls } from "./ExportControls.tsx";
 import {
     exportFilteredListToClipboard,
@@ -42,8 +42,7 @@ export function OPSketchSearch(): JSX.Element {
     });
 
     const [userId, setUserId, removeUserIdFromLocalStorage] =
-        useLocalStorage<number>("userId", 0);
-
+        useLocalStorage<number>({ key: "userId", defaultValue: 0 });
     const { data, isPending, error, refetch, fetchStatus } = useQuery({
         queryKey: ["sketches", userId],
         queryFn: () => fetchAllUserSketches(userId),
@@ -93,6 +92,8 @@ export function OPSketchSearch(): JSX.Element {
                     placeholder="userID"
                     min={1}
                     max={9999999999}
+                    key="userIdInput"
+                    value={userId}
                     allowNegative={false}
                     allowDecimal={false}
                     allowLeadingZeros={false}
