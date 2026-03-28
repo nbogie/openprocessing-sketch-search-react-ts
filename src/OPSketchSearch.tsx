@@ -19,7 +19,7 @@ import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 import { toast } from "sonner";
 
-export function OPSketchSketchSearch(): JSX.Element {
+export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
     const [useFuzzySearch, setUseFuzzySearch] = useState(false);
 

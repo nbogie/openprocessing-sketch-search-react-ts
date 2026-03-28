@@ -1,6 +1,6 @@
 import { AppShell, Burger, Group, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { OPSketchSketchSearch } from "./OPSketchSearch.tsx";
+import { OPSketchSearch } from "./OPSketchSearch.tsx";
 
 export function OPSketchSearchMantine() {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -41,7 +41,7 @@ export function OPSketchSearchMantine() {
                 opened.
             </AppShell.Navbar>
             <AppShell.Main>
-                <OPSketchSketchSearch />
+                <OPSketchSearch />
                 <Text>This is the main section, your app content here.</Text>
                 <Text>
                     The navbar is collapsible both on mobile and desktop. Nice!
