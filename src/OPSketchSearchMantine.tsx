@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, Text, Title } from "@mantine/core";
+import { AppShell, Burger, Group, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { OPSketchSearch } from "./OPSketchSearch.tsx";
 
