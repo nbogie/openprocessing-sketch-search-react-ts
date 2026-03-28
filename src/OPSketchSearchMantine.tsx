@@ -42,13 +42,6 @@ export function OPSketchSearchMantine() {
             </AppShell.Navbar>
             <AppShell.Main>
                 <OPSketchSearch />
-                <Text>This is the main section, your app content here.</Text>
-                <Text>
-                    The navbar is collapsible both on mobile and desktop. Nice!
-                </Text>
-                <Text>
-                    Mobile and desktop opened state can be managed separately.
-                </Text>
             </AppShell.Main>
         </AppShell>
     );
