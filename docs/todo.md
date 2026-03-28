@@ -1,5 +1,7 @@
 # todo
 
+- order results by recency (of creation or of update)
+- have short format export also include full link to sketch? it's much more useful in most cases.
 - change linkOnly export formatter to use markdown bulleted list, not JSON (e.g. for a discord post / a readme)
 - add saved searches.
     - A button to save any search (includes search term, fuzzy switch, mode toggles).
@@ -37,6 +39,7 @@
 
 ## done:
 
+- linkify any links found in the descriptions (albeit through a confirmation modal)
 - add linkOnly export formatter
 - fix localstorage for userID
 - add toast to give feedback about user actions
