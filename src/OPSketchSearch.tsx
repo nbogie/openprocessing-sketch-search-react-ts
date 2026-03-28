@@ -1,5 +1,5 @@
 import { Button, NumberInput } from "@mantine/core";
-import { IconCloudDown, IconRepeat } from "@tabler/icons-react";
+import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
 import { toast } from "sonner";
@@ -164,11 +164,15 @@ export function OPSketchSearch(): JSX.Element {
             <ExportControls
                 exportControls={{
                     exportFilteredList: (fmt: ExportFormat) => {
-                        return exportFilteredListToClipboard(
+                        exportFilteredListToClipboard(
                             extractOPSketchesFromSearchResults(
                                 filteredSketches,
                             ),
                             fmt,
+                        );
+                        toast.success(
+                            `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
+                            { description: `Used ${fmt} format` },
                         );
                     },
                 }}
@@ -183,9 +187,18 @@ export function OPSketchSearch(): JSX.Element {
 
             <footer style={{ alignSelf: "stretch" }}>
                 <hr />
-                <button type="button" onClick={removeUserIdFromLocalStorage}>
+                <Button
+                    variant="default"
+                    onClick={() => {
+                        removeUserIdFromLocalStorage();
+                        toast.success("Removed!", {
+                            description: "Removed userID from localStorage",
+                        });
+                    }}
+                    leftSection={<IconCancel />}
+                >
                     Remove userId from localStorage
-                </button>
+                </Button>
             </footer>
         </main>
     );
