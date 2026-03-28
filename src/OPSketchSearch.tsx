@@ -18,6 +18,7 @@ import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 import { toast } from "sonner";
+import { NumberInput } from "@mantine/core";
 
 export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -77,13 +78,18 @@ export function OPSketchSearch(): JSX.Element {
     return (
         <main>
             <div className="inputsRow">
-                userID:{" "}
-                <input
-                    type="text"
-                    onChange={(e) => setUserId(parseInt(e.target.value, 10))}
-                    // if it's zero or undefined
-                    value={userId || ""}
+                <NumberInput
+                    // label="User ID"
+                    // description="id of openprocessing user to get sketches for"
                     placeholder="userID"
+                    onChange={(strOrNum) => {
+                        if (typeof strOrNum === "number") {
+                            setUserId(strOrNum);
+                        } else {
+                            setUserId(0);
+                        }
+                    }}
+                    // if it's zero or undefined
                 />
                 {userId && (
                     <>
