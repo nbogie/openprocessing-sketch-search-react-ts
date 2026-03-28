@@ -1,6 +1,7 @@
 import type { JSX } from "react";
 import type { FilteredSearchResults } from "./filterSketches.ts";
 import { OPSketchCard } from "./OPSketchCard.tsx";
+import { SimpleGrid } from "@mantine/core";
 
 export function OPSketchList({
     filteredSketches,
@@ -8,7 +9,10 @@ export function OPSketchList({
     filteredSketches: FilteredSearchResults;
 }): JSX.Element {
     return (
-        <div className="sketchCardsList">
+        <SimpleGrid
+            cols={{ base: 1, sm: 2, lg: 3 }}
+            spacing={{ base: 10, sm: "md" }}
+        >
             {filteredSketches.type === "fuzzySearched"
                 ? filteredSketches.items.map((wrapper) => (
                       <OPSketchCard
@@ -28,6 +32,6 @@ export function OPSketchList({
                           }}
                       />
                   ))}
-        </div>
+        </SimpleGrid>
     );
 }
