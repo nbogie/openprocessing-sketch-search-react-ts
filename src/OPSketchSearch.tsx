@@ -1,4 +1,4 @@
-import { Button, NumberInput } from "@mantine/core";
+import { Button, NumberInput, TextInput } from "@mantine/core";
 import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
@@ -130,9 +130,9 @@ export function OPSketchSearch(): JSX.Element {
             </div>
 
             <div className="inputsRow">
-                Filter sketches:{" "}
-                <input
-                    type="text"
+                <TextInput
+                    label="Filter sketches"
+                    description="matches title or description"
                     onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
                     placeholder="search term"
