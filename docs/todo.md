@@ -2,8 +2,6 @@
 
 - add nice tooltips to clarify what stuff does
 
-- add toast to give feedback about user actions
-
 - add boolean logic for filtering?
 
 - scrollbars: blech
@@ -44,6 +42,7 @@
 
 ## done:
 
+- add toast to give feedback about user actions
 - allow filter by sketch type (p5js, html, other (legacy ones?)
 - fuzzy search for filtering?
 - don't search without a userId
