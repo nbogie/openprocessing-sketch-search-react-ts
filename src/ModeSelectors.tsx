@@ -1,6 +1,6 @@
+import { Checkbox, Group, Tooltip } from "@mantine/core";
 import type { JSX } from "react";
 import type { OPSketchMode } from "./opUtils.ts";
-import { Checkbox, Tooltip } from "@mantine/core";
 
 export function ModeSelectors({
     includeModes,
@@ -12,7 +12,7 @@ export function ModeSelectors({
     >;
 }): JSX.Element {
     return (
-        <div className="inputsRow modeSelectors">
+        <Group>
             <ModeSelector
                 label="P5"
                 keyVal="p5js"
@@ -34,7 +34,7 @@ export function ModeSelectors({
                 includeModes={includeModes}
                 setIncludeModes={setIncludeModes}
             />
-        </div>
+        </Group>
     );
 }
 
