@@ -2,7 +2,7 @@ import { ActionIcon, Button, Group, Menu, Stack, Text } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconChevronDown, IconCopy } from "@tabler/icons-react";
 import { type JSX } from "react";
-import type { ExportFormat } from "./exportFilteredList.tsx";
+import type { ExportFormat } from "./exportFilteredList.ts";
 
 type ExportControls = {
     exportFilteredList: (format: ExportFormat) => void;

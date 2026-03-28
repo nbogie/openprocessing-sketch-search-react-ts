@@ -12,7 +12,7 @@ import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
 import { toast } from "sonner";
-import { ExportSplitButton } from "./ExportControls.tsx";
+import { ExportSplitButton } from "./ExportSplitButton.tsx";
 import {
     exportFilteredListToClipboard,
     type ExportFormat,
