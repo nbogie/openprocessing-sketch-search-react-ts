@@ -1,5 +1,11 @@
 # todo
 
+- add saved searches.
+    - A button to save any search (includes search term, fuzzy switch, mode toggles).
+    - prev searches maybe we can show...
+        - as list in left navbar. click one it applies and dismisses nav if it's full-screen.
+        - or as dropdown menu entries
+
 - add boolean logic for filtering?
 
 - mobile?
