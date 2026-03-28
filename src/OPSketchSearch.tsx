@@ -185,11 +185,13 @@ export function OPSketchSearch(): JSX.Element {
                     },
                 }}
             />
-            <SketchResultsMetaData
-                searchResults={extractOPSketchesFromSearchResults(
-                    filteredSketches,
-                )}
-            />
+            <Group>
+                <SketchResultsMetaData
+                    searchResults={extractOPSketchesFromSearchResults(
+                        filteredSketches,
+                    )}
+                />
+            </Group>
 
             <OPSketchList filteredSketches={filteredSketches} />
 

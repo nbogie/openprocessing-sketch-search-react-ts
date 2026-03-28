@@ -44,7 +44,7 @@ function FormatRadioGroup({
 
     return (
         <Radio.Group name="ExportFormat" label="Export format">
-            <Group mt="xs">
+            <Group>
                 {allFormats.map((fmtInfo) => {
                     return (
                         <Tooltip
