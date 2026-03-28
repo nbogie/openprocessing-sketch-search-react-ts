@@ -1,7 +1,5 @@
 # todo
 
-- fix localstorage for userID
-
 - add boolean logic for filtering?
 
 - mobile?
@@ -32,6 +30,7 @@
 
 ## done:
 
+- fix localstorage for userID
 - add toast to give feedback about user actions
 - allow filter by sketch type (p5js, html, other (legacy ones?)
 - fuzzy search for filtering?
