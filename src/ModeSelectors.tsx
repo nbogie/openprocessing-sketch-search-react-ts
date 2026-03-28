@@ -1,4 +1,4 @@
-import { Checkbox, Group, Tooltip } from "@mantine/core";
+import { Checkbox, Fieldset, Group, Tooltip } from "@mantine/core";
 import type { JSX } from "react";
 import type { OPSketchMode } from "./opUtils.ts";
 
@@ -12,29 +12,31 @@ export function ModeSelectors({
     >;
 }): JSX.Element {
     return (
-        <Group>
-            <ModeSelector
-                label="P5"
-                keyVal="p5js"
-                tooltipLabel="include p5.js sketches"
-                includeModes={includeModes}
-                setIncludeModes={setIncludeModes}
-            />
-            <ModeSelector
-                label="html"
-                keyVal="html"
-                tooltipLabel="include html/css/js sketches"
-                includeModes={includeModes}
-                setIncludeModes={setIncludeModes}
-            />
-            <ModeSelector
-                label="(legacy) Pjs"
-                keyVal="pjs"
-                tooltipLabel="include legacy Pjs sketches"
-                includeModes={includeModes}
-                setIncludeModes={setIncludeModes}
-            />
-        </Group>
+        <Fieldset legend="filter by sketch mode">
+            <Group>
+                <ModeSelector
+                    label="P5"
+                    keyVal="p5js"
+                    tooltipLabel="include p5.js sketches"
+                    includeModes={includeModes}
+                    setIncludeModes={setIncludeModes}
+                />
+                <ModeSelector
+                    label="html"
+                    keyVal="html"
+                    tooltipLabel="include html/css/js sketches"
+                    includeModes={includeModes}
+                    setIncludeModes={setIncludeModes}
+                />
+                <ModeSelector
+                    label="(legacy) Pjs"
+                    keyVal="pjs"
+                    tooltipLabel="include legacy Pjs sketches"
+                    includeModes={includeModes}
+                    setIncludeModes={setIncludeModes}
+                />
+            </Group>
+        </Fieldset>
     );
 }
 

@@ -1,4 +1,4 @@
-import { Button, Group, Radio, Tooltip } from "@mantine/core";
+import { Button, Fieldset, Group, Radio, Tooltip } from "@mantine/core";
 import { IconCopy } from "@tabler/icons-react";
 import { useState, type JSX } from "react";
 import type { ExportFormat } from "./exportFilteredList.tsx";
@@ -43,7 +43,7 @@ function FormatRadioGroup({
     ];
 
     return (
-        <Radio.Group name="ExportFormat" label="Export format">
+        <Fieldset legend="Export format">
             <Group>
                 {allFormats.map((fmtInfo) => {
                     return (
@@ -62,6 +62,6 @@ function FormatRadioGroup({
                     );
                 })}
             </Group>
-        </Radio.Group>
+        </Fieldset>
     );
 }
