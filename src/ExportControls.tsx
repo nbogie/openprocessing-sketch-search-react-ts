@@ -1,3 +1,5 @@
+import { Button, Fieldset, Group, Radio, Tooltip } from "@mantine/core";
+import { IconCopy } from "@tabler/icons-react";
 import { useState, type JSX } from "react";
 import type { ExportFormat } from "./exportFilteredList.tsx";
 
@@ -11,12 +13,16 @@ export function ExportControls({
 }): JSX.Element {
     const [format, setFormat] = useState<ExportFormat>("idOnly");
     return (
-        <div className={"inputsRow"}>
-            <button onClick={() => exportControls.exportFilteredList(format)}>
-                Export filtered list
-            </button>
+        <Group align="flex-end">
+            <Button
+                variant="default"
+                rightSection={<IconCopy />}
+                onClick={() => exportControls.exportFilteredList(format)}
+            >
+                Copy filtered list
+            </Button>
             <FormatRadioGroup format={format} setFormat={setFormat} />
-        </div>
+        </Group>
     );
 }
 
@@ -30,22 +36,33 @@ function FormatRadioGroup({
     const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormat(e.target.value as ExportFormat);
     };
-    const renderRadio = (value: ExportFormat) => (
-        <label key={value}>
-            <input
-                type="radio"
-                value={value}
-                checked={format === value}
-                onChange={handleOptionChange}
-            />
-            {value.charAt(0).toUpperCase() + value.slice(1)}
-        </label>
-    );
+    const allFormats: { fmt: ExportFormat; description: string }[] = [
+        { fmt: "idOnly", description: "only id" },
+        { fmt: "short", description: "only id and title" },
+        { fmt: "full", description: "all properties" },
+    ];
+
     return (
-        <div className="radioGroup">
-            {(["idOnly", "short", "full"] satisfies ExportFormat[]).map(
-                renderRadio,
-            )}
-        </div>
+        <Fieldset legend="Export format">
+            <Group>
+                {allFormats.map((fmtInfo) => {
+                    return (
+                        <Tooltip
+                            label={fmtInfo.description}
+                            openDelay={500}
+                            refProp="rootRef"
+                            key={fmtInfo.fmt}
+                        >
+                            <Radio
+                                value={fmtInfo.fmt}
+                                label={fmtInfo.fmt}
+                                onChange={handleOptionChange}
+                                checked={fmtInfo.fmt === format}
+                            />
+                        </Tooltip>
+                    );
+                })}
+            </Group>
+        </Fieldset>
     );
 }

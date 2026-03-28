@@ -1,3 +1,4 @@
+import { Card, Group, Title } from "@mantine/core";
 import type { FuseResult } from "fuse.js";
 import type { JSX } from "react";
 import { type OPSketch } from "./opUtils.ts";
@@ -19,21 +20,30 @@ export function OPSketchCard({
     //         ? sketchOrWrapper.wrapper
     //         : undefined;
     return (
-        <div className="sketchCard" key={sketch.visualID}>
-            {/* {wrapper && (
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
+            <Card.Section>
+                <Group>
+                    <Title order={5} textWrap="wrap">
+                        <SketchLink
+                            text={sketch.visualID.toString()}
+                            sketch={sketch}
+                        />
+                        &nbsp;&nbsp;
+                        {sketch.title}
+                    </Title>
+                </Group>
+            </Card.Section>
+            <>
+                {/* {wrapper && (
                 <>
                     <div>Score: {wrapper.score}</div>
                 </>
             )} */}
-            <div>
-                <SketchLink text={sketch.visualID.toString()} sketch={sketch} />
-                <span style={{ paddingLeft: "0.5rem" }} className="title">
-                    {sketch.title}
-                </span>
-            </div>
-            <div>{sketch.description}</div>
-            <div>{sketch.mode}</div>
-            <div>{sketch.updatedOn}</div>
-        </div>
+
+                <div>{sketch.description}</div>
+                <div>{sketch.mode}</div>
+                <div>{sketch.updatedOn}</div>
+            </>
+        </Card>
     );
 }

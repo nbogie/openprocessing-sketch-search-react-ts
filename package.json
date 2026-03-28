@@ -10,28 +10,36 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@tanstack/react-query": "^5.95.2",
         "react": "^19.2.4",
         "react-dom": "^19.2.4"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.4",
+        "@mantine/core": "^8.3.18",
+        "@mantine/hooks": "^8.3.18",
+        "@tabler/icons-react": "^3.41.0",
         "@tanstack/eslint-plugin-query": "^5.95.2",
+        "@tanstack/react-query": "^5.95.2",
         "@tanstack/react-query-devtools": "^5.95.2",
         "@types/node": "^24.12.0",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^6.0.1",
         "eslint": "^9.39.4",
+        "eslint-config-mantine": "^4.0.3",
+        "eslint-plugin-jsx-a11y": "^6.10.2",
+        "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.0.1",
         "eslint-plugin-react-refresh": "^0.5.2",
         "fuse.js": "^7.1.0",
         "globals": "^17.4.0",
+        "postcss": "^8.5.8",
+        "postcss-preset-mantine": "^1.18.0",
+        "postcss-simple-vars": "^7.0.1",
         "radash": "^12.1.1",
         "sonner": "^2.0.7",
         "typescript": "~5.9.3",
         "typescript-eslint": "^8.57.0",
-        "usehooks-ts": "^3.1.1",
         "vite": "^8.0.1"
     }
 }

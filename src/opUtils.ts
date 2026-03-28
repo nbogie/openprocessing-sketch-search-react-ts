@@ -20,5 +20,5 @@ export interface OPSketch {
 }
 
 export function makeSketchURL(visualID: number): string {
-    return "https://openprocessing.org/sketch/" + visualID;
+    return `https://openprocessing.org/sketch/${  visualID}`;
 }

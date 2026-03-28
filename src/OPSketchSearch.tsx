@@ -1,6 +1,17 @@
+import {
+    Button,
+    Checkbox,
+    Group,
+    NavLink,
+    NumberInput,
+    TextInput,
+    Tooltip,
+} from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
+import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
-import { useLocalStorage } from "usehooks-ts";
+import { toast } from "sonner";
 import { ExportControls } from "./ExportControls.tsx";
 import {
     exportFilteredListToClipboard,
@@ -17,9 +28,8 @@ import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
-import { toast } from "sonner";
 
-export function OPSketchSketchSearch(): JSX.Element {
+export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
     const [useFuzzySearch, setUseFuzzySearch] = useState(false);
 
@@ -32,8 +42,7 @@ export function OPSketchSketchSearch(): JSX.Element {
     });
 
     const [userId, setUserId, removeUserIdFromLocalStorage] =
-        useLocalStorage<number>("userId", 0);
-
+        useLocalStorage<number>({ key: "userId", defaultValue: 0 });
     const { data, isPending, error, refetch, fetchStatus } = useQuery({
         queryKey: ["sketches", userId],
         queryFn: () => fetchAllUserSketches(userId),
@@ -76,25 +85,49 @@ export function OPSketchSketchSearch(): JSX.Element {
 
     return (
         <main>
-            <h1>OpenProcessing Sketch Search</h1>
-            <div className="inputsRow">
-                userID:{" "}
-                <input
-                    type="text"
-                    onChange={(e) => setUserId(parseInt(e.target.value))}
+            <Group>
+                <NumberInput
+                    // label="User ID"
+                    // description="id of openprocessing user to get sketches for"
+                    leftSection="userid: "
+                    leftSectionWidth="8ch"
+                    hideControls
+                    placeholder="userID"
+                    min={1}
+                    max={9999999999}
+                    key="userIdInput"
+                    value={userId}
+                    allowNegative={false}
+                    allowDecimal={false}
+                    allowLeadingZeros={false}
+                    onChange={(strOrNum) => {
+                        if (typeof strOrNum === "number") {
+                            setUserId(strOrNum);
+                        } else {
+                            setUserId(0);
+                        }
+                    }}
                     // if it's zero or undefined
-                    value={userId || ""}
-                    placeholder={"userID"}
                 />
-                {userId && (
+                {userId > 0 && (
                     <>
-                        <button onClick={() => refetchWithToast()}>
+                        <Button
+                            variant="default"
+                            leftSection={
+                                data ? (
+                                    <IconRepeat size={20} />
+                                ) : (
+                                    <IconCloudDown size={20} />
+                                )
+                            }
+                            onClick={() => refetchWithToast()}
+                        >
                             {data === undefined ? (
                                 <>Fetch all sketches from API</>
                             ) : (
                                 <>Re-fetch all sketches from API!</>
                             )}
-                        </button>
+                        </Button>
                     </>
                 )}
                 <div>
@@ -104,26 +137,25 @@ export function OPSketchSketchSearch(): JSX.Element {
                             {isPending ? "No fetch yet." : "Data loaded."}
                         </div>
                     </div>
-                    <div>{error ? "ERROR: " + error.message : <>&nbsp;</>}</div>
+                    <div>{error ? `ERROR: ${error.message}` : <>&nbsp;</>}</div>
                 </div>
-            </div>
+            </Group>
 
-            <div className="inputsRow">
-                Filter sketches:{" "}
-                <input
-                    type="text"
+            <Group align="flex-end">
+                <TextInput
+                    label="Filter sketches"
                     onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
-                    placeholder={"search term"}
+                    placeholder="search term"
                 />
-                <label>
-                    Fuzzy?
-                    <input
+                <Tooltip label="Use fuzzy search?" openDelay={500}>
+                    <Checkbox
+                        label="Fuzzy?"
                         type="checkbox"
                         checked={useFuzzySearch}
                         onChange={() => setUseFuzzySearch((prev) => !prev)}
                     />
-                </label>
+                </Tooltip>
                 <ModeSelectors
                     includeModes={includeModes}
                     setIncludeModes={setIncludeModes}
@@ -139,32 +171,52 @@ export function OPSketchSketchSearch(): JSX.Element {
                         </div>
                     </>
                 )}
-            </div>
+            </Group>
             <ExportControls
                 exportControls={{
                     exportFilteredList: (fmt: ExportFormat) => {
-                        return exportFilteredListToClipboard(
+                        exportFilteredListToClipboard(
                             extractOPSketchesFromSearchResults(
                                 filteredSketches,
                             ),
                             fmt,
                         );
+                        toast.success(
+                            `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
+                            { description: `Used ${fmt} format` },
+                        );
                     },
                 }}
             />
-            <SketchResultsMetaData
-                searchResults={extractOPSketchesFromSearchResults(
-                    filteredSketches,
-                )}
-            />
+            <Group>
+                <SketchResultsMetaData
+                    searchResults={extractOPSketchesFromSearchResults(
+                        filteredSketches,
+                    )}
+                />
+            </Group>
 
             <OPSketchList filteredSketches={filteredSketches} />
 
             <footer style={{ alignSelf: "stretch" }}>
                 <hr />
-                <button onClick={removeUserIdFromLocalStorage}>
+                <Button
+                    variant="default"
+                    onClick={() => {
+                        removeUserIdFromLocalStorage();
+                        toast.success("Removed!", {
+                            description: "Removed userID from localStorage",
+                        });
+                    }}
+                    leftSection={<IconCancel />}
+                >
                     Remove userId from localStorage
-                </button>
+                </Button>
+                <NavLink
+                    href="https://tabler.io/icons"
+                    label="browse tabler.io/icons"
+                    target="_blank"
+                />
             </footer>
         </main>
     );

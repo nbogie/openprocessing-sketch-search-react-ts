@@ -4,11 +4,11 @@ export async function fetchAllUserSketches(
     userId: number,
 ): Promise<OPSketch[]> {
     if (userId <= 0) {
-        throw new Error("Can't search for nonsense userId: " + userId);
+        throw new Error(`Can't search for nonsense userId: ${userId}`);
     }
 
     const baseURL = "https://openprocessing.org";
-    const unpaginatedURL = baseURL + `/api/user/${userId}/sketches`;
+    const unpaginatedURL = `${baseURL}/api/user/${userId}/sketches`;
     let maybeHasMore = false;
     let safetyFetchCount = 0;
 
