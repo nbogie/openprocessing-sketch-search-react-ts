@@ -35,10 +35,8 @@ export function OPSketchSearchMantine() {
             </AppShell.Header>
 
             <AppShell.Navbar p="md">
-                You can collapse the Navbar both on desktop and mobile. After sm
-                breakpoint, the navbar is no longer offset by padding in the
-                main element and it takes the full width of the screen when
-                opened.
+                Placeholder text - I don't need anything displayed here for now,
+                just testing.
             </AppShell.Navbar>
             <AppShell.Main>
                 <OPSketchSearch />
