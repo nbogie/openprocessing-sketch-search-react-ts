@@ -1,5 +1,7 @@
 # todo
 
+- check one radio button is always set for export format
+
 - fix localstorage for userID
 
 - add nice tooltips to clarify what stuff does

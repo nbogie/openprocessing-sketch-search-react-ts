@@ -1,4 +1,4 @@
-import { Button, Group, Radio } from "@mantine/core";
+import { Button, Group, Radio, Tooltip } from "@mantine/core";
 import { IconCopy } from "@tabler/icons-react";
 import { useState, type JSX } from "react";
 import type { ExportFormat } from "./exportFilteredList.tsx";
@@ -19,7 +19,7 @@ export function ExportControls({
                 rightSection={<IconCopy />}
                 onClick={() => exportControls.exportFilteredList(format)}
             >
-                Export filtered list
+                Copy filtered list
             </Button>
             <FormatRadioGroup format={format} setFormat={setFormat} />
         </div>
@@ -36,19 +36,29 @@ function FormatRadioGroup({
     const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormat(e.target.value as ExportFormat);
     };
-    const allFormats: ExportFormat[] = ["idOnly", "short", "full"];
+    const allFormats: { fmt: ExportFormat; description: string }[] = [
+        { fmt: "idOnly", description: "only id" },
+        { fmt: "short", description: "only id and title" },
+        { fmt: "full", description: "all properties" },
+    ];
 
     return (
         <Radio.Group name="ExportFormat" label="Export format">
             <Group mt="xs">
-                {allFormats.map((fmt) => {
+                {allFormats.map((fmtInfo) => {
                     return (
-                        <Radio
-                            value={fmt}
-                            label={fmt}
-                            onChange={handleOptionChange}
-                            checked={fmt === format}
-                        />
+                        <Tooltip
+                            label={fmtInfo.description}
+                            openDelay={500}
+                            refProp="rootRef"
+                        >
+                            <Radio
+                                value={fmtInfo.fmt}
+                                label={fmtInfo.fmt}
+                                onChange={handleOptionChange}
+                                checked={fmtInfo.fmt === format}
+                            />
+                        </Tooltip>
                     );
                 })}
             </Group>
