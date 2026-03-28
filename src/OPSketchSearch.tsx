@@ -1,4 +1,10 @@
-import { Button, NumberInput, TextInput } from "@mantine/core";
+import {
+    Button,
+    Checkbox,
+    NumberInput,
+    TextInput,
+    Tooltip,
+} from "@mantine/core";
 import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
@@ -137,14 +143,14 @@ export function OPSketchSearch(): JSX.Element {
                     value={searchTerm}
                     placeholder="search term"
                 />
-                <label>
-                    Fuzzy?
-                    <input
+                <Tooltip label="Use fuzzy search?" openDelay={500}>
+                    <Checkbox
+                        label="Fuzzy?"
                         type="checkbox"
                         checked={useFuzzySearch}
                         onChange={() => setUseFuzzySearch((prev) => !prev)}
                     />
-                </label>
+                </Tooltip>
                 <ModeSelectors
                     includeModes={includeModes}
                     setIncludeModes={setIncludeModes}
