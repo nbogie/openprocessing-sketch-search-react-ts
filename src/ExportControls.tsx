@@ -13,7 +13,7 @@ export function ExportControls({
 }): JSX.Element {
     const [format, setFormat] = useState<ExportFormat>("idOnly");
     return (
-        <div className="inputsRow">
+        <Group>
             <Button
                 variant="default"
                 rightSection={<IconCopy />}
@@ -22,7 +22,7 @@ export function ExportControls({
                 Copy filtered list
             </Button>
             <FormatRadioGroup format={format} setFormat={setFormat} />
-        </div>
+        </Group>
     );
 }
 

@@ -1,6 +1,8 @@
 import {
     Button,
     Checkbox,
+    Group,
+    NavLink,
     NumberInput,
     TextInput,
     Tooltip,
@@ -84,7 +86,7 @@ export function OPSketchSearch(): JSX.Element {
 
     return (
         <main>
-            <div className="inputsRow">
+            <Group>
                 <NumberInput
                     // label="User ID"
                     // description="id of openprocessing user to get sketches for"
@@ -133,9 +135,9 @@ export function OPSketchSearch(): JSX.Element {
                     </div>
                     <div>{error ? `ERROR: ${error.message}` : <>&nbsp;</>}</div>
                 </div>
-            </div>
+            </Group>
 
-            <div className="inputsRow">
+            <Group>
                 <TextInput
                     label="Filter sketches"
                     description="matches title or description"
@@ -166,7 +168,7 @@ export function OPSketchSearch(): JSX.Element {
                         </div>
                     </>
                 )}
-            </div>
+            </Group>
             <ExportControls
                 exportControls={{
                     exportFilteredList: (fmt: ExportFormat) => {
@@ -205,6 +207,11 @@ export function OPSketchSearch(): JSX.Element {
                 >
                     Remove userId from localStorage
                 </Button>
+                <NavLink
+                    href="https://tabler.io/icons"
+                    label="browse tabler.io/icons"
+                    target="_blank"
+                />
             </footer>
         </main>
     );

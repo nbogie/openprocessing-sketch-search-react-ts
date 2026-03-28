@@ -1,15 +1,3 @@
-.inputsRow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-}
-.modeSelectors {
-    outline: 1px solid var(--accent-border);
-    border-radius: 0.3rem;
-    padding: 0 0.2rem;
-}
-
 .sketchCardsList {
     display: flex;
     flex-direction: row;
@@ -41,24 +29,4 @@
 }
 .sketchCard .title {
     font-weight: bold;
-}
-
-.exportControlsRow {
-    display: flex;
-    flex-direction: row;
-    gap: 0.2rem;
-    align-items: center;
-}
-
-.radioGroup {
-    display: flex;
-    flex-direction: row;
-    gap: 0.2rem;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
 }
