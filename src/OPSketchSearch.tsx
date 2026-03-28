@@ -17,6 +17,7 @@ import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
+import { toast } from "sonner";
 
 export function OPSketchSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -39,6 +40,22 @@ export function OPSketchSketchSearch(): JSX.Element {
         enabled: false,
         retry: false,
     });
+
+    async function refetchWithToast() {
+        //We will run our tanstack query's refetch,
+        // but as we need to pass the refetch's promise to toast.promise
+        //we need to call it different so it throws on error.
+        //(toast.promise will handle the error for us)
+
+        // Use throwOnError to make the promise reject on failure
+        const fetchPromise = refetch({ throwOnError: true });
+
+        toast.promise(fetchPromise, {
+            loading: `Loading all sketches for ${userId}...`,
+            success: `Sketches loaded for ${userId}!`,
+            error: (err: Error) => `Failed: ${err.message}.  See console.`,
+        });
+    }
 
     function sketchesMatchingModes(sketch: OPSketch) {
         const { p5js, html, pjs } = includeModes;
@@ -71,7 +88,7 @@ export function OPSketchSketchSearch(): JSX.Element {
                 />
                 {userId && (
                     <>
-                        <button onClick={() => refetch()}>
+                        <button onClick={() => refetchWithToast()}>
                             {data === undefined ? (
                                 <>Fetch all sketches from API</>
                             ) : (
