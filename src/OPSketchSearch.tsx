@@ -1,5 +1,8 @@
+import { Button, NumberInput } from "@mantine/core";
+import { IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
+import { toast } from "sonner";
 import { useLocalStorage } from "usehooks-ts";
 import { ExportControls } from "./ExportControls.tsx";
 import {
@@ -17,8 +20,6 @@ import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
-import { toast } from "sonner";
-import { NumberInput } from "@mantine/core";
 
 export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -82,6 +83,11 @@ export function OPSketchSearch(): JSX.Element {
                     // label="User ID"
                     // description="id of openprocessing user to get sketches for"
                     placeholder="userID"
+                    min={1}
+                    max={9999999999}
+                    allowNegative={false}
+                    allowDecimal={false}
+                    allowLeadingZeros={false}
                     onChange={(strOrNum) => {
                         if (typeof strOrNum === "number") {
                             setUserId(strOrNum);
@@ -91,10 +97,17 @@ export function OPSketchSearch(): JSX.Element {
                     }}
                     // if it's zero or undefined
                 />
-                {userId && (
+                {userId > 0 && (
                     <>
-                        <button
-                            type="button"
+                        <Button
+                            variant="default"
+                            leftSection={
+                                data ? (
+                                    <IconRepeat size={20} />
+                                ) : (
+                                    <IconCloudDown size={20} />
+                                )
+                            }
                             onClick={() => refetchWithToast()}
                         >
                             {data === undefined ? (
@@ -102,7 +115,7 @@ export function OPSketchSearch(): JSX.Element {
                             ) : (
                                 <>Re-fetch all sketches from API!</>
                             )}
-                        </button>
+                        </Button>
                     </>
                 )}
                 <div>

@@ -10,7 +10,6 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@tanstack/react-query": "^5.95.2",
         "react": "^19.2.4",
         "react-dom": "^19.2.4"
     },
@@ -18,7 +17,9 @@
         "@eslint/js": "^9.39.4",
         "@mantine/core": "^8.3.18",
         "@mantine/hooks": "^8.3.18",
+        "@tabler/icons-react": "^3.41.0",
         "@tanstack/eslint-plugin-query": "^5.95.2",
+        "@tanstack/react-query": "^5.95.2",
         "@tanstack/react-query-devtools": "^5.95.2",
         "@types/node": "^24.12.0",
         "@types/react": "^19.2.14",
