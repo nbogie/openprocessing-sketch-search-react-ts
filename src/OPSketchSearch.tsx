@@ -89,6 +89,9 @@ export function OPSketchSearch(): JSX.Element {
                 <NumberInput
                     // label="User ID"
                     // description="id of openprocessing user to get sketches for"
+                    leftSection="userid: "
+                    leftSectionWidth="8ch"
+                    hideControls
                     placeholder="userID"
                     min={1}
                     max={9999999999}
