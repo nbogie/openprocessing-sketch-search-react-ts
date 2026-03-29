@@ -221,6 +221,14 @@ export function OPSketchSearch(): JSX.Element {
                                 >
                                     tabler.io/icons
                                 </Anchor>
+                                {userId !== undefined && userId > 0 && (
+                                    <Anchor
+                                        href={`https://openprocessing.org/api/user/${userId}/sketches?limit=980&offset=0`}
+                                    >
+                                        Get user sketches URL: OpenProcessing
+                                        API
+                                    </Anchor>
+                                )}
                             </Stack>
                         </Fieldset>
                     )}
