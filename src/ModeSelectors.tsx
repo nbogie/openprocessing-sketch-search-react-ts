@@ -53,9 +53,16 @@ export function ModeSelectors({
                     setIncludeModes={setIncludeModes}
                 />
                 <ModeSelector
-                    label="(legacy) Pjs"
+                    label={`${isDesktop ? "(legacy) " : ""}Pjs`}
                     keyVal="pjs"
                     tooltipLabel="include legacy Pjs sketches"
+                    includeModes={includeModes}
+                    setIncludeModes={setIncludeModes}
+                />
+                <ModeSelector
+                    label={`${isDesktop ? "(legacy) " : ""}applet`}
+                    keyVal="applet"
+                    tooltipLabel="include legacy applet sketches"
                     includeModes={includeModes}
                     setIncludeModes={setIncludeModes}
                 />

@@ -2,7 +2,6 @@
 
 - order results by recency (of creation or of update)
 - have short format export also include full link to sketch? it's much more useful in most cases.
-- deal with applet mode sketches? (all archived, i think but code is available). Worth it? Offering as a filter is more noise - ppl can search by text.
 - change linkOnly export formatter to use markdown bulleted list, not JSON (e.g. for a discord post / a readme)
 - add saved searches.
     - A button to save any search (includes search term, fuzzy switch, mode toggles).
@@ -46,6 +45,7 @@
 
 ## done:
 
+- deal with applet mode sketches? (all archived, i think but code is available). This is probably not worth it - offering as a filter is more noise - ppl can search by text. More code to maintain and test.
 - if a sketch url is pasted into the user id, hit the API for it and get and populate the user id that way
 - pasting an openprocessing user url into the userId field grabs that userId
 - linkify any links found in the descriptions (albeit through a confirmation modal)

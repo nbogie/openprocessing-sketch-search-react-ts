@@ -46,6 +46,7 @@ export function OPSketchSearch(): JSX.Element {
         p5js: false,
         html: false,
         pjs: false,
+        applet: false,
     });
     const [userId, setUserId, removeUserIdFromLocalStorage] =
         useLocalStorage<number>({ key: "userId", defaultValue: 0 });
@@ -74,9 +75,9 @@ export function OPSketchSearch(): JSX.Element {
     }
 
     function sketchesMatchingModes(sketch: OPSketch) {
-        const { p5js, html, pjs } = includeModes;
+        const { p5js, html, pjs, applet } = includeModes;
 
-        if (!html && !p5js && !pjs) {
+        if (!html && !p5js && !pjs && !applet) {
             return true;
         }
         return includeModes[sketch.mode];
