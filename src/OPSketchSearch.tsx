@@ -2,6 +2,7 @@ import {
     Button,
     Checkbox,
     Group,
+    Loader,
     NavLink,
     NumberInput,
     Stack,
@@ -116,7 +117,9 @@ export function OPSketchSearch(): JSX.Element {
                             <Button
                                 variant="default"
                                 leftSection={
-                                    data ? (
+                                    fetchStatus === "fetching" ? (
+                                        <Loader size={20} />
+                                    ) : data ? (
                                         <IconRepeat size={20} />
                                     ) : (
                                         <IconCloudDown size={20} />
@@ -132,17 +135,7 @@ export function OPSketchSearch(): JSX.Element {
                             </Button>
                         </>
                     )}
-                    <div>
-                        <div>
-                            <div>Fetch Status: {fetchStatus}</div>
-                            <div>
-                                {isPending ? "No fetch yet." : "Data loaded."}
-                            </div>
-                        </div>
-                        <div>
-                            {error ? `ERROR: ${error.message}` : <>&nbsp;</>}
-                        </div>
-                    </div>
+                    <div>{error ? `ERROR: ${error.message}` : <>&nbsp;</>}</div>
                 </Group>
 
                 <Group align="flex-end">
