@@ -12,7 +12,7 @@ import { OPSketchSearch } from "./OPSketchSearch.tsx";
 
 export function MyAppShell() {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
-    const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+    const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false);
 
     return (
         <AppShell
