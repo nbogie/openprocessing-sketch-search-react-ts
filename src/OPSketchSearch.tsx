@@ -4,7 +4,6 @@ import {
     Group,
     Loader,
     NavLink,
-    NumberInput,
     Stack,
     Text,
     TextInput,
@@ -30,6 +29,7 @@ import {
 import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
+import { UserIdInput } from "./UserIdInput.tsx";
 
 export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -89,30 +89,7 @@ export function OPSketchSearch(): JSX.Element {
         <main>
             <Stack>
                 <Group>
-                    <NumberInput
-                        w="18ch"
-                        // label="User ID"
-                        // description="id of openprocessing user to get sketches for"
-                        leftSection="userid: "
-                        leftSectionWidth="8ch"
-                        hideControls
-                        placeholder="userID"
-                        min={1}
-                        max={9999999999}
-                        key="userIdInput"
-                        value={userId}
-                        allowNegative={false}
-                        allowDecimal={false}
-                        allowLeadingZeros={false}
-                        onChange={(strOrNum) => {
-                            if (typeof strOrNum === "number") {
-                                setUserId(strOrNum);
-                            } else {
-                                setUserId(0);
-                            }
-                        }}
-                        // if it's zero or undefined
-                    />
+                    <UserIdInput userId={userId} setUserId={setUserId} />
                     {userId > 0 && (
                         <>
                             <Button
