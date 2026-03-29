@@ -90,6 +90,7 @@ export function OPSketchSearch(): JSX.Element {
             <Stack>
                 <Group>
                     <NumberInput
+                        w="18ch"
                         // label="User ID"
                         // description="id of openprocessing user to get sketches for"
                         leftSection="userid: "
@@ -140,6 +141,7 @@ export function OPSketchSearch(): JSX.Element {
 
                 <Group align="flex-end">
                     <TextInput
+                        w="18ch"
                         label="Filter sketches"
                         onChange={(e) => setSearchTerm(e.target.value)}
                         value={searchTerm}
