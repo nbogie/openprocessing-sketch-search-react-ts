@@ -14,11 +14,11 @@ import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
 import { toast } from "sonner";
-import { ExportSplitButton } from "./ExportSplitButton.tsx";
 import {
     exportFilteredListToClipboard,
     type ExportFormat,
 } from "./exportFilteredList.ts";
+import { ExportSplitButton } from "./ExportSplitButton.tsx";
 import { fetchAllUserSketches } from "./fetchAllUserSketches.ts";
 import {
     extractOPSketchesFromSearchResults,
@@ -45,7 +45,7 @@ export function OPSketchSearch(): JSX.Element {
 
     const [userId, setUserId, removeUserIdFromLocalStorage] =
         useLocalStorage<number>({ key: "userId", defaultValue: 0 });
-    const { data, isPending, error, refetch, fetchStatus } = useQuery({
+    const { data, error, refetch, fetchStatus } = useQuery({
         queryKey: ["sketches", userId],
         queryFn: () => fetchAllUserSketches(userId),
         enabled: false,
