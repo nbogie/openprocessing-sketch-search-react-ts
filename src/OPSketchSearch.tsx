@@ -35,6 +35,8 @@ import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { UserIdInput } from "./UserIdInput.tsx";
 
 export function OPSketchSearch(): JSX.Element {
+    const isDevMode = import.meta.env.DEV;
+
     const [searchTerm, setSearchTerm] = useState("");
     const [useFuzzySearch, setUseFuzzySearch] = useState(false);
 
@@ -45,9 +47,9 @@ export function OPSketchSearch(): JSX.Element {
         html: false,
         pjs: false,
     });
-
     const [userId, setUserId, removeUserIdFromLocalStorage] =
         useLocalStorage<number>({ key: "userId", defaultValue: 0 });
+
     const { data, error, refetch, fetchStatus } = useQuery({
         queryKey: ["sketches", userId],
         queryFn: () => fetchAllUserSketches(userId),
@@ -189,40 +191,42 @@ export function OPSketchSearch(): JSX.Element {
 
                 <footer style={{ alignSelf: "stretch" }}>
                     <hr />
-                    <Fieldset legend="dev stuff">
-                        <Stack style={{ alignItems: "flex-start" }}>
-                            <Button
-                                variant="default"
-                                onClick={() => {
-                                    removeUserIdFromLocalStorage();
-                                    toast.success("Removed!", {
-                                        description:
-                                            "Removed userID from localStorage",
-                                    });
-                                }}
-                                leftSection={<IconCancel />}
-                            >
-                                Remove userId from localStorage
-                            </Button>
-                            <Anchor
-                                href="https://mantine.dev/core/package/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Mantine components
-                            </Anchor>
-                            <Anchor
-                                href="https://tabler.io/icons"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                tabler.io/icons
-                            </Anchor>
-                            <Anchor href="https://github.com/nbogie/openprocessing-sketch-search-react-ts">
-                                Source on github
-                            </Anchor>
-                        </Stack>
-                    </Fieldset>
+                    {isDevMode && (
+                        <Fieldset legend="dev stuff">
+                            <Stack style={{ alignItems: "flex-start" }}>
+                                <Button
+                                    variant="default"
+                                    onClick={() => {
+                                        removeUserIdFromLocalStorage();
+                                        toast.success("Removed!", {
+                                            description:
+                                                "Removed userID from localStorage",
+                                        });
+                                    }}
+                                    leftSection={<IconCancel />}
+                                >
+                                    Remove userId from localStorage
+                                </Button>
+                                <Anchor
+                                    href="https://mantine.dev/core/package/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Mantine components
+                                </Anchor>
+                                <Anchor
+                                    href="https://tabler.io/icons"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    tabler.io/icons
+                                </Anchor>
+                            </Stack>
+                        </Fieldset>
+                    )}
+                    <Anchor href="https://github.com/nbogie/openprocessing-sketch-search-react-ts">
+                        Source on github
+                    </Anchor>
                 </footer>
             </Stack>
         </main>
