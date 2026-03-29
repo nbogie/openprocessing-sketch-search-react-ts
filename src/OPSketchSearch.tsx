@@ -159,8 +159,10 @@ export function OPSketchSearch(): JSX.Element {
                         includeModes={includeModes}
                         setIncludeModes={setIncludeModes}
                     />
-                    {data && (
-                        <>
+                </Group>
+                {data && (
+                    <>
+                        <Group>
                             <div>
                                 Showing{" "}
                                 <span style={{ fontWeight: "bold" }}>
@@ -168,32 +170,35 @@ export function OPSketchSearch(): JSX.Element {
                                 </span>{" "}
                                 / {data.length} sketches.
                             </div>
-                        </>
-                    )}
-                </Group>
-                <ExportSplitButton
-                    exportControls={{
-                        exportFilteredList: (fmt: ExportFormat) => {
-                            exportFilteredListToClipboard(
-                                extractOPSketchesFromSearchResults(
+
+                            <ExportSplitButton
+                                exportControls={{
+                                    exportFilteredList: (fmt: ExportFormat) => {
+                                        exportFilteredListToClipboard(
+                                            extractOPSketchesFromSearchResults(
+                                                filteredSketches,
+                                            ),
+                                            fmt,
+                                        );
+                                        toast.success(
+                                            `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
+                                            {
+                                                description: `Used ${fmt} format`,
+                                            },
+                                        );
+                                    },
+                                }}
+                            />
+                        </Group>
+                        <Group>
+                            <SketchResultsMetaData
+                                searchResults={extractOPSketchesFromSearchResults(
                                     filteredSketches,
-                                ),
-                                fmt,
-                            );
-                            toast.success(
-                                `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
-                                { description: `Used ${fmt} format` },
-                            );
-                        },
-                    }}
-                />
-                <Group>
-                    <SketchResultsMetaData
-                        searchResults={extractOPSketchesFromSearchResults(
-                            filteredSketches,
-                        )}
-                    />
-                </Group>
+                                )}
+                            />
+                        </Group>
+                    </>
+                )}
 
                 <OPSketchList filteredSketches={filteredSketches} />
 
