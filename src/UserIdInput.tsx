@@ -1,4 +1,4 @@
-import { NumberInput } from "@mantine/core";
+import { NumberInput, Tooltip } from "@mantine/core";
 import type { JSX } from "react";
 
 export function UserIdInput({
@@ -23,24 +23,29 @@ export function UserIdInput({
     }
 
     return (
-        <NumberInput
-            leftSection="user id: "
-            leftSectionWidth="8ch"
-            //TODO: really necessary? (prevent left section capturing clicks)
-            styles={{ section: { pointerEvents: "none" } }}
-            hideControls
-            placeholder="userID"
-            min={1}
-            max={999_999_999_999}
-            value={userId === 0 ? "" : userId}
-            allowNegative={false}
-            allowDecimal={false}
-            allowLeadingZeros={false}
-            onPaste={handlePasteLookingForURL}
-            onChange={(strOrNum) => {
-                setUserId(typeof strOrNum === "number" ? strOrNum : 0);
-            }}
-        />
+        <Tooltip
+            openDelay={8000}
+            label="You can also paste a user profile URL in here"
+        >
+            <NumberInput
+                leftSection="user id: "
+                leftSectionWidth="8ch"
+                //TODO: really necessary? (prevent left section capturing clicks)
+                styles={{ section: { pointerEvents: "none" } }}
+                hideControls
+                placeholder="userID"
+                min={1}
+                max={999_999_999_999}
+                value={userId === 0 ? "" : userId}
+                allowNegative={false}
+                allowDecimal={false}
+                allowLeadingZeros={false}
+                onPaste={handlePasteLookingForURL}
+                onChange={(strOrNum) => {
+                    setUserId(typeof strOrNum === "number" ? strOrNum : 0);
+                }}
+            />
+        </Tooltip>
     );
 }
 
