@@ -10,7 +10,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { OPSketchSearch } from "./OPSketchSearch.tsx";
 
-export function OPSketchSearchMantine() {
+export function MyAppShell() {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
