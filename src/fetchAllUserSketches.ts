@@ -59,3 +59,24 @@ function makeIdentifyingHeadersAndInit(): RequestInit {
         },
     };
 }
+
+type OPSketchWithUserID = {
+    userID: number;
+};
+export async function fetchSketchBySketchId(
+    sketchId: number,
+): Promise<OPSketchWithUserID | null> {
+    const baseURL = "https://openprocessing.org";
+    const url = `${baseURL}/api/sketch/${sketchId}`;
+
+    //TODO: handle errors here
+    const response = await fetch(url);
+    const data = await response.json();
+
+    //TODO: verify with zod.  our only use case atm is that it has a userID - a number.
+    if (typeof data === "object" && "userID" in data) {
+        return data;
+    }
+
+    return null;
+}

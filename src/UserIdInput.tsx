@@ -1,5 +1,6 @@
 import { NumberInput, Tooltip } from "@mantine/core";
 import type { JSX } from "react";
+import { fetchSketchBySketchId } from "./fetchAllUserSketches.ts";
 
 export function UserIdInput({
     userId,
@@ -8,9 +9,10 @@ export function UserIdInput({
     userId: number;
     setUserId: React.Dispatch<React.SetStateAction<number>>;
 }): JSX.Element {
-    function handlePasteLookingForURL(e: React.ClipboardEvent) {
+    async function handlePasteLookingForURL(e: React.ClipboardEvent) {
         const pastedText = e.clipboardData.getData("text").trim();
-        const extractedId = parsePossibleOpenProcessingURLForUserId(pastedText);
+        const extractedId =
+            await parsePossibleOpenProcessingURLAnyTypeForUserId(pastedText);
 
         if (extractedId) {
             //don't let the underlying input process this paste event.
@@ -25,7 +27,7 @@ export function UserIdInput({
     return (
         <Tooltip
             openDelay={8000}
-            label="You can also paste a user profile URL in here"
+            label="You can also paste a full sketch URL or user URL here"
         >
             <NumberInput
                 leftSection="user id: "
@@ -49,12 +51,32 @@ export function UserIdInput({
     );
 }
 
+async function parsePossibleOpenProcessingURLAnyTypeForUserId(
+    text: string,
+): Promise<number | null> {
+    const result = parsePossibleOpenProcessingUserURLForUserId(text);
+    if (result) {
+        return result;
+    }
+    const sketchId = parsePossibleOpenProcessingSketchURLForSketchId(text);
+    if (sketchId) {
+        const sketchInfo = await fetchSketchBySketchId(sketchId);
+        if (sketchInfo?.userID) {
+            return sketchInfo.userID;
+        }
+    }
+    return null;
+}
+
 /**
- * Extract and return a numeric ID from an OpenProcessing URL (for now, a user profile url), or null if invalid.
+ *  @TODO: move this url parser to opUtils
+ * Extract and return a numeric user ID from an OpenProcessing URL (for now, a user profile url), or null if invalid.
  * Example: input: https://openprocessing.org/user/135249/#sketches output 135249
  * Example: input: https://openprocessing.org/user/1 output: 1
  */
-function parsePossibleOpenProcessingURLForUserId(text: string): number | null {
+function parsePossibleOpenProcessingUserURLForUserId(
+    text: string,
+): number | null {
     const urlMatch = text.match(
         // user https://openprocessing.org/user/ then 1 to 15 digits then either: end of input, or / or #
         /https:\/\/openprocessing\.org\/user\/(\d{1,15})(?:\/|$|#)/i,
@@ -67,4 +89,28 @@ function parsePossibleOpenProcessingURLForUserId(text: string): number | null {
         return null;
     }
     return parseInt(userIdAsString, 10) ?? null;
+}
+
+/**
+ * @TODO: move this url parser to opUtils
+ * Extract and return a numeric sketch ID from an OpenProcessing sketch URL,  or null if invalid.
+ * Example input: https://openprocessing.org/sketch/1751229# output: 1751229
+ * Example input: https://openprocessing.org/sketch/1751229/ output: 1751229
+ * Example input: https://openprocessing.org/sketch/1751229  output: 1751229
+ */
+function parsePossibleOpenProcessingSketchURLForSketchId(
+    text: string,
+): number | null {
+    const urlMatch = text.match(
+        // user https://openprocessing.org/sketch/ then 1 to 15 digits then either: end of input, or / or #
+        /https:\/\/openprocessing\.org\/sketch\/(\d{1,15})(?:\/|$|#)/i,
+    );
+    if (!urlMatch) {
+        return null;
+    }
+    const sketchIdAsString = urlMatch.at(1);
+    if (!sketchIdAsString) {
+        return null;
+    }
+    return parseInt(sketchIdAsString, 10) ?? null;
 }

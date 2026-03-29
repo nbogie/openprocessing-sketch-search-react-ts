@@ -1,7 +1,6 @@
 # todo
 
-- if a sketch url is pasted into the user id, hit the API for it and get and populate the user id that way
-- order results by recency (of creation or of update)
+- allow filtering by date range?
 - have short format export also include full link to sketch? it's much more useful in most cases.
 - change linkOnly export formatter to use markdown bulleted list, not JSON (e.g. for a discord post / a readme)
 - add saved searches.
@@ -45,6 +44,8 @@
     - socket.io / socketio
 
 ## done:
+
+- if a sketch url is pasted into the user id, hit the API for it and get and populate the user id that way
 
 - reverse order of results from API so most recent first (currently)
 - fix bug where missing description would prevent display of search results.
