@@ -10,11 +10,12 @@ export function UserIdInput({
 }): JSX.Element {
     return (
         <NumberInput
-            w="18ch"
             // label="User ID"
             // description="id of openprocessing user to get sketches for"
-            leftSection="userid: "
+            leftSection="user id: "
             leftSectionWidth="8ch"
+            //TODO: really necessary? (prevent left section capturing clicks)
+            styles={{ section: { pointerEvents: "none" } }}
             hideControls
             placeholder="userID"
             min={1}

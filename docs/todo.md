@@ -15,7 +15,7 @@
     - for mobile maybe just show first 10 or so results. Most people just trying to find a specific sketch, not browse
 
 - don't show userId by default once it's set? (if all use cases are for consuming our own stuff).
-    - tho, teachers might have multiple accounts.
+    - however, teachers might have multiple accounts.
 
 - allow create, save (local storage) and export to json of lists of sketches (e.g. matching certain search results):
     - export:
@@ -24,8 +24,14 @@
     - use-cases: I want...
         - all my sketch ids for all my 3d examples, say
         - all my sketches between date x and y
+        - all sketches marked:
+            - example
+            - starter
+            - exercise
+            - exercise solution
         - all my genuary sketches for this year
         - all my sketches that use webgpu
+        - all using library X (socket.io, matter.js / tone.js / ml5 / three.js)
 
 - saved lists:
     - "to study" / "study fork"

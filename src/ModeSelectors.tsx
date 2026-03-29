@@ -1,6 +1,7 @@
 import { Checkbox, Fieldset, Group, Tooltip } from "@mantine/core";
 import type { JSX } from "react";
 import type { OPSketchMode } from "./opUtils.ts";
+import { useMediaQuery } from "@mantine/hooks";
 
 export function ModeSelectors({
     includeModes,
@@ -11,9 +12,14 @@ export function ModeSelectors({
         React.SetStateAction<Record<OPSketchMode, boolean>>
     >;
 }): JSX.Element {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
     return (
-        <Fieldset legend="filter by sketch mode">
-            <Group>
+        <Fieldset
+            legend={isDesktop ? "Filter by sketch mode" : "sketch mode"}
+            style={{ alignItems: "flex-end" }}
+        >
+            <Group style={{ alignItems: "flex-end" }}>
                 <ModeSelector
                     label="P5"
                     keyVal="p5js"

@@ -1,5 +1,5 @@
 import { ActionIcon, Button, Group, Menu, Stack, Text } from "@mantine/core";
-import { useLocalStorage } from "@mantine/hooks";
+import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
 import { IconChevronDown, IconCopy } from "@tabler/icons-react";
 import { type JSX } from "react";
 import type { ExportFormat } from "./exportFilteredList.ts";
@@ -22,10 +22,12 @@ export function ExportSplitButton({
         { fmt: "short", description: "id & title" },
         { fmt: "full", description: "all properties" },
     ];
-
+    // `(min-width: ${theme.breakpoints.md})`
+    const isDesktop = useMediaQuery("(min-width: 768px)");
     return (
         <Group wrap="nowrap" gap={0}>
             <Button
+                w="100%"
                 onClick={() => exportControls.exportFilteredList(format)}
                 leftSection={<IconCopy size={16} />}
                 variant="default"
@@ -37,7 +39,7 @@ export function ExportSplitButton({
                     borderRightWidth: "1px",
                 }}
             >
-                Copy list (format: {format})
+                Copy list {isDesktop && <>(format: {format})</>}
             </Button>
 
             <Menu position="bottom-end" withinPortal>

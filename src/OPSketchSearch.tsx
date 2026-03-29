@@ -1,8 +1,10 @@
 import {
+    Anchor,
     Button,
     Checkbox,
+    Fieldset,
     Group,
-    NavLink,
+    SimpleGrid,
     Stack,
     Text,
     TextInput,
@@ -102,7 +104,20 @@ export function OPSketchSearch(): JSX.Element {
     return (
         <main>
             <Stack>
-                <Group>
+                <SimpleGrid
+                    cols={2}
+                    style={{
+                        alignItems: "stretch", // Pushes all cells to the bottom of their row
+                        justifyItems: "stretch", // Pushes all cells to the right of their column
+                    }}
+                >
+                    {error && (
+                        <>
+                            <Text>ERROR: </Text>
+                            <Text>{error.message}</Text>
+                        </>
+                    )}
+
                     <UserIdInput userId={userId} setUserId={setUserId} />
                     {userId > 0 && (
                         <FetchButton
@@ -111,69 +126,88 @@ export function OPSketchSearch(): JSX.Element {
                             refetchWithToast={refetchWithToast}
                         />
                     )}
-                    <Text>
-                        {error ? `ERROR: ${error.message}` : <>&nbsp;</>}
-                    </Text>
-                </Group>
 
-                <Group align="flex-end">
-                    <TextInput
-                        w="18ch"
-                        label="Filter sketches"
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        value={searchTerm}
-                        placeholder="search term"
-                    />
-                    <Tooltip label="Use fuzzy search?" openDelay={500}>
-                        <Checkbox
-                            label="Fuzzy?"
-                            type="checkbox"
-                            checked={useFuzzySearch}
-                            onChange={() => setUseFuzzySearch((prev) => !prev)}
+                    <Group style={{ alignItems: "flex-end" }}>
+                        <Tooltip label="Use fuzzy search?" openDelay={500}>
+                            <Checkbox
+                                label="Fuzzy search?"
+                                type="checkbox"
+                                checked={useFuzzySearch}
+                                onChange={() =>
+                                    setUseFuzzySearch((prev) => !prev)
+                                }
+                            />
+                        </Tooltip>
+                        <TextInput
+                            w="100%"
+                            leftSection="Filter: "
+                            leftSectionWidth="6ch"
+                            //TODO: really necessary? (prevent left section capturing clicks)
+                            styles={{ section: { pointerEvents: "none" } }}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            value={searchTerm}
+                            placeholder="search term"
                         />
-                    </Tooltip>
+                    </Group>
                     <ModeSelectors
                         includeModes={includeModes}
                         setIncludeModes={setIncludeModes}
                     />
-                </Group>
-                {data && (
-                    <Group>
-                        <FilterStats
-                            filteredSketches={filteredSketches}
-                            allData={data}
-                        />
+                    {data && (
+                        <>
+                            <FilterStats
+                                filteredSketches={filteredSketches}
+                                allData={data}
+                            />
 
-                        <ExportSplitButton
-                            exportControls={{
-                                exportFilteredList: handleExportFilteredList,
-                            }}
-                        />
-                    </Group>
-                )}
+                            <ExportSplitButton
+                                exportControls={{
+                                    exportFilteredList:
+                                        handleExportFilteredList,
+                                }}
+                            />
+                        </>
+                    )}
+                </SimpleGrid>
 
                 <OPSketchList filteredSketches={filteredSketches} />
 
                 <footer style={{ alignSelf: "stretch" }}>
                     <hr />
-                    <Button
-                        variant="default"
-                        onClick={() => {
-                            removeUserIdFromLocalStorage();
-                            toast.success("Removed!", {
-                                description: "Removed userID from localStorage",
-                            });
-                        }}
-                        leftSection={<IconCancel />}
-                    >
-                        Remove userId from localStorage
-                    </Button>
-                    <NavLink
-                        href="https://tabler.io/icons"
-                        label="browse tabler.io/icons"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    />
+                    <Fieldset legend="dev stuff">
+                        <Stack style={{ alignItems: "flex-start" }}>
+                            <Button
+                                variant="default"
+                                onClick={() => {
+                                    removeUserIdFromLocalStorage();
+                                    toast.success("Removed!", {
+                                        description:
+                                            "Removed userID from localStorage",
+                                    });
+                                }}
+                                leftSection={<IconCancel />}
+                            >
+                                Remove userId from localStorage
+                            </Button>
+                            <Anchor
+                                href="https://mantine.dev/core/package/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Mantine components
+                            </Anchor>
+                            <Anchor
+                                href="https://tabler.io/icons"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                tabler.io/icons
+                            </Anchor>
+                            <Anchor href="https://github.com/nbogie/openprocessing-sketch-search-react-ts">
+                                Source on github
+                            </Anchor>
+                        </Stack>
+                    </Fieldset>
                 </footer>
             </Stack>
         </main>

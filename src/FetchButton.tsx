@@ -2,6 +2,7 @@ import { Button, Loader } from "@mantine/core";
 import { IconCloudDown, IconRepeat } from "@tabler/icons-react";
 import type { OPSketch } from "./opUtils.ts";
 import type { FetchStatus } from "@tanstack/react-query";
+import { useMediaQuery } from "@mantine/hooks";
 export function FetchButton({
     fetchStatus,
     data,
@@ -11,6 +12,8 @@ export function FetchButton({
     data: OPSketch[] | undefined;
     refetchWithToast: () => void;
 }) {
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
     return (
         <Button
             variant="default"
@@ -26,9 +29,9 @@ export function FetchButton({
             onClick={() => refetchWithToast()}
         >
             {data === undefined ? (
-                <>Fetch all sketches from API</>
+                <>Fetch all {isDesktop && "sketches from API"}</>
             ) : (
-                <>Re-fetch all sketches from API!</>
+                <>Re-fetch all {isDesktop && "sketches from API!"}</>
             )}
         </Button>
     );
