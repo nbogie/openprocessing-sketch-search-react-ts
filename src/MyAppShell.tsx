@@ -17,9 +17,9 @@ export function MyAppShell() {
     return (
         <AppShell
             padding="md"
-            header={{ height: { base: 100, sm: 60 } }}
+            header={{ height: { base: 100, xs: 60 } }}
             navbar={{
-                width: 300,
+                width: "16rem",
                 breakpoint: "sm",
                 collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
             }}
