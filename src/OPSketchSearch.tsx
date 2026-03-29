@@ -6,9 +6,9 @@ import {
     NavLink,
     NumberInput,
     Stack,
+    Text,
     TextInput,
     Tooltip,
-    Text,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
@@ -30,7 +30,6 @@ import {
 import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
-import { SketchResultsMetaData } from "./SketchResultsMetaData.tsx";
 
 export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -193,13 +192,13 @@ export function OPSketchSearch(): JSX.Element {
                                 }}
                             />
                         </Group>
-                        <Group>
+                        {/* <Group>
                             <SketchResultsMetaData
                                 searchResults={extractOPSketchesFromSearchResults(
                                     filteredSketches,
                                 )}
                             />
-                        </Group>
+                        </Group> */}
                     </>
                 )}
 
