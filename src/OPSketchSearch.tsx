@@ -69,7 +69,10 @@ export function OPSketchSearch(): JSX.Element {
 
         toast.promise(fetchPromise, {
             loading: `Loading all sketches for ${userId}...`,
-            success: `Sketches loaded for ${userId}!`,
+            success: (x) =>
+                x.data
+                    ? `${x.data.length} sketches loaded for user ${userId}!`
+                    : "Fetch finished ok, but no data!",
             error: (err: Error) => `Failed: ${err.message}.  See console.`,
         });
     }
