@@ -1,4 +1,12 @@
-import { AppShell, Burger, Group, Title } from "@mantine/core";
+import {
+    Anchor,
+    AppShell,
+    Burger,
+    Group,
+    Stack,
+    Text,
+    Title,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { OPSketchSearch } from "./OPSketchSearch.tsx";
 
@@ -35,8 +43,21 @@ export function OPSketchSearchMantine() {
             </AppShell.Header>
 
             <AppShell.Navbar p="md">
-                Placeholder text - I don't need anything displayed here for now,
-                just testing.
+                <Stack>
+                    <Text>
+                        You can close this. This is a placeholder for saved
+                        searches (not implemented).
+                    </Text>
+                    <Text>
+                        This app uses the{" "}
+                        <Anchor
+                            href="https://www.postman.com/openprocessing-api/openprocessing-api/overview"
+                            target="_blank"
+                        >
+                            OpenProcessing API v2
+                        </Anchor>
+                    </Text>
+                </Stack>
             </AppShell.Navbar>
             <AppShell.Main>
                 <OPSketchSearch />
