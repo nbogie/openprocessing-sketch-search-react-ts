@@ -4,6 +4,7 @@ import {
     Group,
     NavLink,
     NumberInput,
+    Stack,
     TextInput,
     Tooltip,
 } from "@mantine/core";
@@ -85,140 +86,144 @@ export function OPSketchSearch(): JSX.Element {
 
     return (
         <main>
-            <Group>
-                <NumberInput
-                    // label="User ID"
-                    // description="id of openprocessing user to get sketches for"
-                    leftSection="userid: "
-                    leftSectionWidth="8ch"
-                    hideControls
-                    placeholder="userID"
-                    min={1}
-                    max={9999999999}
-                    key="userIdInput"
-                    value={userId}
-                    allowNegative={false}
-                    allowDecimal={false}
-                    allowLeadingZeros={false}
-                    onChange={(strOrNum) => {
-                        if (typeof strOrNum === "number") {
-                            setUserId(strOrNum);
-                        } else {
-                            setUserId(0);
-                        }
-                    }}
-                    // if it's zero or undefined
-                />
-                {userId > 0 && (
-                    <>
-                        <Button
-                            variant="default"
-                            leftSection={
-                                data ? (
-                                    <IconRepeat size={20} />
-                                ) : (
-                                    <IconCloudDown size={20} />
-                                )
+            <Stack>
+                <Group>
+                    <NumberInput
+                        // label="User ID"
+                        // description="id of openprocessing user to get sketches for"
+                        leftSection="userid: "
+                        leftSectionWidth="8ch"
+                        hideControls
+                        placeholder="userID"
+                        min={1}
+                        max={9999999999}
+                        key="userIdInput"
+                        value={userId}
+                        allowNegative={false}
+                        allowDecimal={false}
+                        allowLeadingZeros={false}
+                        onChange={(strOrNum) => {
+                            if (typeof strOrNum === "number") {
+                                setUserId(strOrNum);
+                            } else {
+                                setUserId(0);
                             }
-                            onClick={() => refetchWithToast()}
-                        >
-                            {data === undefined ? (
-                                <>Fetch all sketches from API</>
-                            ) : (
-                                <>Re-fetch all sketches from API!</>
-                            )}
-                        </Button>
-                    </>
-                )}
-                <div>
+                        }}
+                        // if it's zero or undefined
+                    />
+                    {userId > 0 && (
+                        <>
+                            <Button
+                                variant="default"
+                                leftSection={
+                                    data ? (
+                                        <IconRepeat size={20} />
+                                    ) : (
+                                        <IconCloudDown size={20} />
+                                    )
+                                }
+                                onClick={() => refetchWithToast()}
+                            >
+                                {data === undefined ? (
+                                    <>Fetch all sketches from API</>
+                                ) : (
+                                    <>Re-fetch all sketches from API!</>
+                                )}
+                            </Button>
+                        </>
+                    )}
                     <div>
-                        <div>Fetch Status: {fetchStatus}</div>
                         <div>
-                            {isPending ? "No fetch yet." : "Data loaded."}
+                            <div>Fetch Status: {fetchStatus}</div>
+                            <div>
+                                {isPending ? "No fetch yet." : "Data loaded."}
+                            </div>
+                        </div>
+                        <div>
+                            {error ? `ERROR: ${error.message}` : <>&nbsp;</>}
                         </div>
                     </div>
-                    <div>{error ? `ERROR: ${error.message}` : <>&nbsp;</>}</div>
-                </div>
-            </Group>
+                </Group>
 
-            <Group align="flex-end">
-                <TextInput
-                    label="Filter sketches"
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    value={searchTerm}
-                    placeholder="search term"
-                />
-                <Tooltip label="Use fuzzy search?" openDelay={500}>
-                    <Checkbox
-                        label="Fuzzy?"
-                        type="checkbox"
-                        checked={useFuzzySearch}
-                        onChange={() => setUseFuzzySearch((prev) => !prev)}
+                <Group align="flex-end">
+                    <TextInput
+                        label="Filter sketches"
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        value={searchTerm}
+                        placeholder="search term"
                     />
-                </Tooltip>
-                <ModeSelectors
-                    includeModes={includeModes}
-                    setIncludeModes={setIncludeModes}
-                />
-                {data && (
-                    <>
-                        <div>
-                            Showing{" "}
-                            <span style={{ fontWeight: "bold" }}>
-                                {filteredSketches.items.length}
-                            </span>{" "}
-                            / {data.length} sketches.
-                        </div>
-                    </>
-                )}
-            </Group>
-            <ExportSplitButton
-                exportControls={{
-                    exportFilteredList: (fmt: ExportFormat) => {
-                        exportFilteredListToClipboard(
-                            extractOPSketchesFromSearchResults(
-                                filteredSketches,
-                            ),
-                            fmt,
-                        );
-                        toast.success(
-                            `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
-                            { description: `Used ${fmt} format` },
-                        );
-                    },
-                }}
-            />
-            <Group>
-                <SketchResultsMetaData
-                    searchResults={extractOPSketchesFromSearchResults(
-                        filteredSketches,
+                    <Tooltip label="Use fuzzy search?" openDelay={500}>
+                        <Checkbox
+                            label="Fuzzy?"
+                            type="checkbox"
+                            checked={useFuzzySearch}
+                            onChange={() => setUseFuzzySearch((prev) => !prev)}
+                        />
+                    </Tooltip>
+                    <ModeSelectors
+                        includeModes={includeModes}
+                        setIncludeModes={setIncludeModes}
+                    />
+                    {data && (
+                        <>
+                            <div>
+                                Showing{" "}
+                                <span style={{ fontWeight: "bold" }}>
+                                    {filteredSketches.items.length}
+                                </span>{" "}
+                                / {data.length} sketches.
+                            </div>
+                        </>
                     )}
-                />
-            </Group>
-
-            <OPSketchList filteredSketches={filteredSketches} />
-
-            <footer style={{ alignSelf: "stretch" }}>
-                <hr />
-                <Button
-                    variant="default"
-                    onClick={() => {
-                        removeUserIdFromLocalStorage();
-                        toast.success("Removed!", {
-                            description: "Removed userID from localStorage",
-                        });
+                </Group>
+                <ExportSplitButton
+                    exportControls={{
+                        exportFilteredList: (fmt: ExportFormat) => {
+                            exportFilteredListToClipboard(
+                                extractOPSketchesFromSearchResults(
+                                    filteredSketches,
+                                ),
+                                fmt,
+                            );
+                            toast.success(
+                                `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
+                                { description: `Used ${fmt} format` },
+                            );
+                        },
                     }}
-                    leftSection={<IconCancel />}
-                >
-                    Remove userId from localStorage
-                </Button>
-                <NavLink
-                    href="https://tabler.io/icons"
-                    label="browse tabler.io/icons"
-                    target="_blank"
-                    rel="noopener noreferrer"
                 />
-            </footer>
+                <Group>
+                    <SketchResultsMetaData
+                        searchResults={extractOPSketchesFromSearchResults(
+                            filteredSketches,
+                        )}
+                    />
+                </Group>
+
+                <OPSketchList filteredSketches={filteredSketches} />
+
+                <footer style={{ alignSelf: "stretch" }}>
+                    <hr />
+                    <Button
+                        variant="default"
+                        onClick={() => {
+                            removeUserIdFromLocalStorage();
+                            toast.success("Removed!", {
+                                description: "Removed userID from localStorage",
+                            });
+                        }}
+                        leftSection={<IconCancel />}
+                    >
+                        Remove userId from localStorage
+                    </Button>
+                    <NavLink
+                        href="https://tabler.io/icons"
+                        label="browse tabler.io/icons"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    />
+                </footer>
+            </Stack>
         </main>
     );
 }
