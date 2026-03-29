@@ -6,18 +6,36 @@ import { useMediaQuery } from "@mantine/hooks";
 export function ModeSelectors({
     includeModes,
     setIncludeModes,
+    isOverFiltering,
 }: {
     includeModes: Record<OPSketchMode, boolean>;
+    isOverFiltering: boolean;
     setIncludeModes: React.Dispatch<
         React.SetStateAction<Record<OPSketchMode, boolean>>
     >;
 }): JSX.Element {
     const isDesktop = useMediaQuery("(min-width: 768px)");
-
+    const shouldWarnAboutOverFiltering =
+        isOverFiltering && Object.values(includeModes).some((v) => v);
     return (
         <Fieldset
             legend={isDesktop ? "Filter by sketch mode" : "sketch mode"}
-            style={{ alignItems: "flex-end" }}
+            style={{
+                alignItems: "flex-end",
+                // Direct CSS overrides are the most reliable for 'dashed'
+                border: shouldWarnAboutOverFiltering
+                    ? "2px dashed var(--mantine-color-error)"
+                    : undefined,
+                transition: "outline 0.9s ease",
+            }}
+            // styles={{
+            //     legend: {
+            //         color: shouldWarnAboutOverFiltering
+            //             ? "var(--mantine-color-error)"
+            //             : undefined,
+            //         fontWeight: shouldWarnAboutOverFiltering ? 700 : 500,
+            //     },
+            // }}
         >
             <Group style={{ alignItems: "flex-end" }}>
                 <ModeSelector
@@ -62,7 +80,7 @@ function ModeSelector({
     >;
 }) {
     return (
-        <Tooltip label={tooltipLabel} refProp="rootRef" openDelay={500}>
+        <Tooltip label={tooltipLabel} refProp="rootRef" openDelay={800}>
             <Checkbox
                 checked={includeModes[keyVal]}
                 // onChange={(event) => setChecked(event.currentTarget.checked)}

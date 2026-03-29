@@ -100,6 +100,11 @@ export function OPSketchSearch(): JSX.Element {
             },
         );
     }
+    //A flag indicating there ARE sketches that could be shown but between the filter term and the mode toggles, we've narrowed it to zero!
+    const isOverFiltering =
+        data !== undefined &&
+        data.length > 0 &&
+        filteredSketches.items.length === 0;
 
     return (
         <main>
@@ -140,6 +145,14 @@ export function OPSketchSearch(): JSX.Element {
                         </Tooltip>
                         <TextInput
                             w="100%"
+                            style={
+                                isOverFiltering
+                                    ? {
+                                          outline:
+                                              "2px dashed  var(--mantine-color-error)",
+                                      }
+                                    : {}
+                            }
                             leftSection="Filter: "
                             leftSectionWidth="6ch"
                             //TODO: really necessary? (prevent left section capturing clicks)
@@ -150,6 +163,7 @@ export function OPSketchSearch(): JSX.Element {
                         />
                     </Group>
                     <ModeSelectors
+                        isOverFiltering={isOverFiltering}
                         includeModes={includeModes}
                         setIncludeModes={setIncludeModes}
                     />
