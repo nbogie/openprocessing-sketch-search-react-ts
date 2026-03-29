@@ -1,6 +1,7 @@
 import { NumberInput, Tooltip } from "@mantine/core";
 import type { JSX } from "react";
 import { fetchSketchBySketchId } from "./fetchAllUserSketches.ts";
+import { toast } from "sonner";
 
 export function UserIdInput({
     userId,
@@ -50,18 +51,23 @@ export function UserIdInput({
         </Tooltip>
     );
 }
-
+/** Try to get the UserID from an openprocessing URL.  It may do a fetch if it recognises a potential sketch URL.
+ * @returns the userId parsed from either the user url or found by asking the API about the sketch id it found in a sketch url.
+ */
 async function parsePossibleOpenProcessingURLAnyTypeForUserId(
     text: string,
 ): Promise<number | null> {
     const result = parsePossibleOpenProcessingUserURLForUserId(text);
     if (result) {
+        toast(`Got userID ${result} from user URL`);
+
         return result;
     }
     const sketchId = parsePossibleOpenProcessingSketchURLForSketchId(text);
     if (sketchId) {
         const sketchInfo = await fetchSketchBySketchId(sketchId);
         if (sketchInfo?.userID) {
+            toast(`Got userID ${sketchInfo.userID} from sketch ${sketchId}`);
             return sketchInfo.userID;
         }
     }

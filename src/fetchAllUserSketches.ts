@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import type { OPSketch } from "./opUtils.ts";
 
 export async function fetchAllUserSketches(
@@ -70,12 +71,17 @@ export async function fetchSketchBySketchId(
     const url = `${baseURL}/api/sketch/${sketchId}`;
 
     //TODO: handle errors here
-    const response = await fetch(url);
-    const data = await response.json();
-
-    //TODO: verify with zod.  our only use case atm is that it has a userID - a number.
-    if (typeof data === "object" && "userID" in data) {
-        return data;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        //TODO: verify with zod.  our only use case atm is that it has a userID - a number.
+        if (typeof data === "object" && "userID" in data) {
+            return data;
+        }
+    } catch (err) {
+        toast(`error fetching sketch info for ${sketchId}`);
+        // console.log("error whilst fetching sketch data from API: ", err);
+        return null;
     }
 
     return null;
