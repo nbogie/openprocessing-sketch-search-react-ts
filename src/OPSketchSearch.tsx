@@ -149,7 +149,8 @@ export function OPSketchSearch(): JSX.Element {
                                 isOverFiltering
                                     ? {
                                           outline:
-                                              "2px dashed  var(--mantine-color-error)",
+                                              "2px dashed  var(--mantine-color-yellow-6)",
+                                          transition: "outline 0.5s ease",
                                       }
                                     : {}
                             }

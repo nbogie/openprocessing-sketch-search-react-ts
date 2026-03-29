@@ -23,15 +23,15 @@ export function ModeSelectors({
             style={{
                 alignItems: "flex-end",
                 // Direct CSS overrides are the most reliable for 'dashed'
-                border: shouldWarnAboutOverFiltering
-                    ? "2px dashed var(--mantine-color-error)"
+                outline: shouldWarnAboutOverFiltering
+                    ? "2px dashed var(--mantine-color-yellow-6)"
                     : undefined,
-                transition: "outline 0.9s ease",
+                transition: "outline 0.5s ease",
             }}
             // styles={{
             //     legend: {
             //         color: shouldWarnAboutOverFiltering
-            //             ? "var(--mantine-color-error)"
+            //             ? "var(--mantine-color-yellow-6)"
             //             : undefined,
             //         fontWeight: shouldWarnAboutOverFiltering ? 700 : 500,
             //     },
