@@ -21,7 +21,8 @@ export function OPSketchCard({
             {/* Card.Section is designed to ignore the card's padding, e.g. to stretch images out to the edges */}
             {/* <Card.Section> */}
 
-            <Stack>
+            {/* Make this stack 100% height so it extends all the way down (we don't know how far, that'll still be decided by contents) */}
+            <Stack h="100%">
                 <Group>
                     <Title order={5} textWrap="wrap">
                         <SketchLink
@@ -40,33 +41,40 @@ export function OPSketchCard({
                     </>
                 )} */}
                     <Text>{linkifyDescription(sketch.description)}</Text>
-                    <Text size="xs" c="dimmed">
-                        Mode: {sketch.mode}
-                    </Text>
-                    <Tooltip
-                        label={
-                            <>
-                                <Text size="sm">
-                                    Created: {sketch.createdOn}
+                    {/* This is the first of the elements we want at the bottom of the card, so it gets margin-top: auto */}
+                    <Stack style={{ rowGap: "0rem" }} mt="auto">
+                        <Text size="xs" c="dimmed">
+                            Mode: {sketch.mode}
+                        </Text>
+                        <Tooltip
+                            label={
+                                <>
+                                    <Text size="sm">
+                                        Created: {sketch.createdOn}
+                                    </Text>
+                                    <Text size="sm">
+                                        Updated: {sketch.updatedOn}
+                                    </Text>
+                                </>
+                            }
+                            openDelay={800}
+                        >
+                            <Group
+                                style={{ columnGap: "1rem", rowGap: "0rem" }}
+                            >
+                                <Text size="xs" c="dimmed">
+                                    Created:{" "}
+                                    {sketch.createdOn?.split(" ").at(0) ??
+                                        "null"}
                                 </Text>
-                                <Text size="sm">
-                                    Updated: {sketch.updatedOn}
+                                <Text size="xs" c="dimmed">
+                                    Updated:{" "}
+                                    {sketch.updatedOn?.split(" ").at(0) ??
+                                        "null"}
                                 </Text>
-                            </>
-                        }
-                        openDelay={800}
-                    >
-                        <Group style={{ columnGap: "1rem", rowGap: "0rem" }}>
-                            <Text size="xs" c="dimmed">
-                                Created:{" "}
-                                {sketch.createdOn?.split(" ").at(0) ?? "null"}
-                            </Text>
-                            <Text size="xs" c="dimmed">
-                                Updated:{" "}
-                                {sketch.updatedOn?.split(" ").at(0) ?? "null"}
-                            </Text>
-                        </Group>
-                    </Tooltip>
+                            </Group>
+                        </Tooltip>
+                    </Stack>
                 </>
             </Stack>
         </Card>
