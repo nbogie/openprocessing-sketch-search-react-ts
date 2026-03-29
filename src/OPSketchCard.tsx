@@ -21,19 +21,21 @@ export function OPSketchCard({
     //         ? sketchOrWrapper.wrapper
     //         : undefined;
     return (
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
-            <Card.Section>
-                <Group>
-                    <Title order={5} textWrap="wrap">
-                        <SketchLink
-                            text={sketch.visualID.toString()}
-                            sketch={sketch}
-                        />
-                        &nbsp;&nbsp;
-                        {sketch.title}
-                    </Title>
-                </Group>
-            </Card.Section>
+        <Card shadow="sm" padding="sm" radius="md" withBorder>
+            {/* Card.Section is designed to ignore the card's padding, e.g. to stretch images out to the edges */}
+            {/* <Card.Section> */}
+
+            <Group>
+                <Title order={5} textWrap="wrap">
+                    <SketchLink
+                        text={sketch.visualID.toString()}
+                        sketch={sketch}
+                    />
+                    &nbsp;&nbsp;
+                    {sketch.title}
+                </Title>
+            </Group>
+            {/* </Card.Section> */}
             <>
                 {/* {wrapper && (
                 <>
@@ -41,7 +43,7 @@ export function OPSketchCard({
                 </>
             )} */}
 
-                <div>{linkifyDescription(sketch.description)}</div>
+                <Text>{linkifyDescription(sketch.description)}</Text>
 
                 <Text size="xs" c="dimmed">
                     Mode: {sketch.mode}
