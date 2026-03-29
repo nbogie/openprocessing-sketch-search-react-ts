@@ -46,6 +46,7 @@
 
 ## done:
 
+- reverse order of results from API so most recent first (currently)
 - fix bug where missing description would prevent display of search results.
 - deal with applet mode sketches? (all archived, i think but code is available). This is probably not worth it - offering as a filter is more noise - ppl can search by text. More code to maintain and test.
 - pasting an openprocessing user url into the userId field grabs that userId

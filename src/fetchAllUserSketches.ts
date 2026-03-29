@@ -35,7 +35,7 @@ export async function fetchAllUserSketches(
     } while (maybeHasMore && safetyFetchCount < 3);
 
     //todo: use zod or similar to validate this returned data
-    return allData as OPSketch[];
+    return allData.reverse() as OPSketch[];
 }
 
 // function doesAPIHaveMore(response: Response): boolean {
