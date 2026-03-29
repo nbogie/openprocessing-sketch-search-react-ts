@@ -7,6 +7,9 @@ import { LinkWithWarning } from "./LinkWithWarning.tsx";
  */
 
 export function linkifyDescription(text: string) {
+    if (!text || text.length < 10) {
+        return text;
+    }
     const urlRegex = /(https:\/\/[^\s]+)/g;
     const parts = text.split(urlRegex);
 
