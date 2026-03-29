@@ -45,8 +45,8 @@ export function OPSketchSearchMantine() {
             <AppShell.Navbar p="md">
                 <Stack>
                     <Text>
-                        You can close this. This is a placeholder for saved
-                        searches (not implemented).
+                        You can close this with the X above. This is a
+                        placeholder for saved searches (not implemented).
                     </Text>
                     <Text>
                         This app uses the{" "}
