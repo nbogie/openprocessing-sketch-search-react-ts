@@ -8,6 +8,7 @@ import {
     Stack,
     TextInput,
     Tooltip,
+    Text,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
@@ -136,7 +137,9 @@ export function OPSketchSearch(): JSX.Element {
                             </Button>
                         </>
                     )}
-                    <div>{error ? `ERROR: ${error.message}` : <>&nbsp;</>}</div>
+                    <Text>
+                        {error ? `ERROR: ${error.message}` : <>&nbsp;</>}
+                    </Text>
                 </Group>
 
                 <Group align="flex-end">
@@ -163,13 +166,13 @@ export function OPSketchSearch(): JSX.Element {
                 {data && (
                     <>
                         <Group>
-                            <div>
+                            <Text w="27ch">
                                 Showing{" "}
                                 <span style={{ fontWeight: "bold" }}>
                                     {filteredSketches.items.length}
                                 </span>{" "}
                                 / {data.length} sketches.
-                            </div>
+                            </Text>
 
                             <ExportSplitButton
                                 exportControls={{
