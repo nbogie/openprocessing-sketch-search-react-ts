@@ -2,7 +2,6 @@ import {
     Button,
     Checkbox,
     Group,
-    Loader,
     NavLink,
     Stack,
     Text,
@@ -10,7 +9,7 @@ import {
     Tooltip,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
-import { IconCancel, IconCloudDown, IconRepeat } from "@tabler/icons-react";
+import { IconCancel } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, type JSX } from "react";
 import { toast } from "sonner";
@@ -20,17 +19,18 @@ import {
 } from "./exportFilteredList.ts";
 import { ExportSplitButton } from "./ExportSplitButton.tsx";
 import { fetchAllUserSketches } from "./fetchAllUserSketches.ts";
+import { FetchButton } from "./FetchButton.tsx";
 import {
     extractOPSketchesFromSearchResults,
     filterForMatchingNames,
     fuzzyFilterForMatchingNames,
     type FilteredSearchResults,
 } from "./filterSketches.ts";
+import { FilterStats } from "./FilterStats.tsx";
 import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { UserIdInput } from "./UserIdInput.tsx";
-import { FilterStats } from "./FilterStats.tsx";
 
 export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -105,25 +105,11 @@ export function OPSketchSearch(): JSX.Element {
                 <Group>
                     <UserIdInput userId={userId} setUserId={setUserId} />
                     {userId > 0 && (
-                        <Button
-                            variant="default"
-                            leftSection={
-                                fetchStatus === "fetching" ? (
-                                    <Loader size={20} />
-                                ) : data ? (
-                                    <IconRepeat size={20} />
-                                ) : (
-                                    <IconCloudDown size={20} />
-                                )
-                            }
-                            onClick={() => refetchWithToast()}
-                        >
-                            {data === undefined ? (
-                                <>Fetch all sketches from API</>
-                            ) : (
-                                <>Re-fetch all sketches from API!</>
-                            )}
-                        </Button>
+                        <FetchButton
+                            fetchStatus={fetchStatus}
+                            data={data}
+                            refetchWithToast={refetchWithToast}
+                        />
                     )}
                     <Text>
                         {error ? `ERROR: ${error.message}` : <>&nbsp;</>}
