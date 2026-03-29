@@ -30,6 +30,7 @@ import { ModeSelectors } from "./ModeSelectors.tsx";
 import { OPSketchList } from "./OPSketchList.tsx";
 import type { OPSketch, OPSketchMode } from "./opUtils.ts";
 import { UserIdInput } from "./UserIdInput.tsx";
+import { FilterStats } from "./FilterStats.tsx";
 
 export function OPSketchSearch(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState("");
@@ -85,33 +86,44 @@ export function OPSketchSearch(): JSX.Element {
             : filterForMatchingNames(sketchesFilteredToModes, searchTerm)
         : { type: "exactSearched", items: [] as OPSketch[] };
 
+    function handleExportFilteredList(fmt: ExportFormat) {
+        exportFilteredListToClipboard(
+            extractOPSketchesFromSearchResults(filteredSketches),
+            fmt,
+        );
+        toast.success(
+            `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
+            {
+                description: `Used ${fmt} format`,
+            },
+        );
+    }
+
     return (
         <main>
             <Stack>
                 <Group>
                     <UserIdInput userId={userId} setUserId={setUserId} />
                     {userId > 0 && (
-                        <>
-                            <Button
-                                variant="default"
-                                leftSection={
-                                    fetchStatus === "fetching" ? (
-                                        <Loader size={20} />
-                                    ) : data ? (
-                                        <IconRepeat size={20} />
-                                    ) : (
-                                        <IconCloudDown size={20} />
-                                    )
-                                }
-                                onClick={() => refetchWithToast()}
-                            >
-                                {data === undefined ? (
-                                    <>Fetch all sketches from API</>
+                        <Button
+                            variant="default"
+                            leftSection={
+                                fetchStatus === "fetching" ? (
+                                    <Loader size={20} />
+                                ) : data ? (
+                                    <IconRepeat size={20} />
                                 ) : (
-                                    <>Re-fetch all sketches from API!</>
-                                )}
-                            </Button>
-                        </>
+                                    <IconCloudDown size={20} />
+                                )
+                            }
+                            onClick={() => refetchWithToast()}
+                        >
+                            {data === undefined ? (
+                                <>Fetch all sketches from API</>
+                            ) : (
+                                <>Re-fetch all sketches from API!</>
+                            )}
+                        </Button>
                     )}
                     <Text>
                         {error ? `ERROR: ${error.message}` : <>&nbsp;</>}
@@ -140,43 +152,18 @@ export function OPSketchSearch(): JSX.Element {
                     />
                 </Group>
                 {data && (
-                    <>
-                        <Group>
-                            <Text w="27ch">
-                                Showing{" "}
-                                <span style={{ fontWeight: "bold" }}>
-                                    {filteredSketches.items.length}
-                                </span>{" "}
-                                / {data.length} sketches.
-                            </Text>
+                    <Group>
+                        <FilterStats
+                            filteredSketches={filteredSketches}
+                            allData={data}
+                        />
 
-                            <ExportSplitButton
-                                exportControls={{
-                                    exportFilteredList: (fmt: ExportFormat) => {
-                                        exportFilteredListToClipboard(
-                                            extractOPSketchesFromSearchResults(
-                                                filteredSketches,
-                                            ),
-                                            fmt,
-                                        );
-                                        toast.success(
-                                            `Copied ${filteredSketches.items.length} sketch infos to clipboard`,
-                                            {
-                                                description: `Used ${fmt} format`,
-                                            },
-                                        );
-                                    },
-                                }}
-                            />
-                        </Group>
-                        {/* <Group>
-                            <SketchResultsMetaData
-                                searchResults={extractOPSketchesFromSearchResults(
-                                    filteredSketches,
-                                )}
-                            />
-                        </Group> */}
-                    </>
+                        <ExportSplitButton
+                            exportControls={{
+                                exportFilteredList: handleExportFilteredList,
+                            }}
+                        />
+                    </Group>
                 )}
 
                 <OPSketchList filteredSketches={filteredSketches} />
